@@ -3,6 +3,9 @@ import { Admin, Resource } from "react-admin";
 // import jsonServerProvider from "ra-data-json-server";
 // import HomeIcon from "@material-ui/icons/Home";
 import { UserList, UserEdit, UserCreate, UserIcon } from "./pages/users";
+import Login from "./pages/login";
+import LogoutButton from "./components/logoutButton";
+
 import {
   CategoryList,
   CategoryEdit,
@@ -17,7 +20,7 @@ import {
 } from "./pages/templates";
 
 import "./App.css";
-// import authProvider from "./utils/authProvider";
+import authProvider from "./utils/authProvider";
 import dataProvider from "./utils/dataProvider";
 
 // const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
@@ -25,7 +28,12 @@ import dataProvider from "./utils/dataProvider";
 const App = () => {
   console.log(dataProvider);
   return (
-    <Admin dataProvider={dataProvider}>
+    <Admin
+      dataProvider={dataProvider}
+      authProvider={authProvider}
+      loginPage={Login}
+      logoutButton={LogoutButton}
+    >
       <Resource
         name="User"
         list={UserList}

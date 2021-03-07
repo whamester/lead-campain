@@ -8,9 +8,11 @@ axios.defaults.baseURL = "http://localhost:9096/api";
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
-    config.mode = "no-cors";
+    // config.mode = "no-cors";
     config.headers = {
-      //   "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST,GET,PUT,DELETE",
+      "Access-Control-Allow-Headers": "Authorization, Lang",
       Accept: "application/json",
       "Content-Type": "application/json",
     };
