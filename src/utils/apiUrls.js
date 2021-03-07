@@ -7,6 +7,8 @@ const url = {
   templates: "Templates",
   campains: "Campains",
   clients: "Clients",
+  sponsors: "Sponsor",
+  sends: "Sends",
 };
 
 export default url;
