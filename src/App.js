@@ -4,6 +4,12 @@ import { Admin, Resource } from "react-admin";
 // import HomeIcon from "@material-ui/icons/Home";
 import { PostList, PostEdit, PostCreate, PostIcon } from "./pages/posts";
 import { UserList, UserEdit, UserCreate, UserIcon } from "./pages/users";
+import {
+  CategoryList,
+  CategoryEdit,
+  CategoryCreate,
+  CategoryIcon,
+} from "./pages/categories";
 
 import "./App.css";
 // import authProvider from "./utils/authProvider";
@@ -29,6 +35,13 @@ const App = () => {
         edit={PostEdit}
         create={PostCreate}
         icon={PostIcon}
+      />
+      <Resource
+        name="categories"
+        list={CategoryList}
+        edit={CategoryEdit}
+        create={CategoryCreate}
+        icon={CategoryIcon}
       />
     </Admin>
   );
