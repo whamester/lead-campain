@@ -1,10 +1,11 @@
 import React from "react";
 import { Admin, Resource } from "react-admin";
-// import jsonServerProvider from "ra-data-json-server";
-// import HomeIcon from "@material-ui/icons/Home";
-import { UserList, UserEdit, UserCreate, UserIcon } from "./pages/users";
 import Login from "./pages/login";
 import LogoutButton from "./components/logoutButton";
+import authProvider from "./utils/authProvider";
+import dataProvider from "./utils/dataProvider";
+import urls from "./utils/apiUrls";
+import { UserList, UserEdit, UserCreate, UserIcon } from "./pages/users";
 
 import {
   CategoryList,
@@ -12,6 +13,7 @@ import {
   CategoryCreate,
   CategoryIcon,
 } from "./pages/categories";
+
 import {
   TemplateList,
   TemplateEdit,
@@ -20,13 +22,11 @@ import {
 } from "./pages/templates";
 
 import "./App.css";
-import authProvider from "./utils/authProvider";
-import dataProvider from "./utils/dataProvider";
 
+const { users } = urls;
 // const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
 const App = () => {
-  console.log(dataProvider);
   return (
     <Admin
       dataProvider={dataProvider}
@@ -35,7 +35,7 @@ const App = () => {
       logoutButton={LogoutButton}
     >
       <Resource
-        name="User"
+        name={users}
         list={UserList}
         icon={UserIcon}
         edit={UserEdit}

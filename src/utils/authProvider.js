@@ -2,10 +2,6 @@ import axios from "./axiosInterceptor";
 import urls from "./apiUrls";
 import { getAuthData, initSession, removeSession } from "./storage";
 
-// const auth_item = "auth";
-// const token_item = "token";
-// const refresh_item = "refresh";
-
 const { login } = urls;
 
 const authProvider = {

@@ -11,8 +11,10 @@ import {
   TextInput,
   required,
 } from "react-admin";
+import urls from "../utils/apiUrls";
 import Icon from "@material-ui/icons/Category";
 export const CategoryIcon = Icon;
+const { categories } = urls;
 
 export const CategoryList = (props) => (
   <List {...props}>
@@ -24,7 +26,7 @@ export const CategoryList = (props) => (
       <TextField source="createUser" label="Created by" />
       <DateField source="updateDate" label="Last updated at" />
       <TextField source="updateUser" label="Last updated by" />
-      <EditButton basePath="/Categories" />
+      <EditButton basePath={`/${categories}`} />
     </Datagrid>
   </List>
 );

@@ -14,10 +14,11 @@ import {
   SelectField,
   AutocompleteInput,
 } from "react-admin";
+import urls from "../utils/apiUrls";
 import RichTextInput from "ra-input-rich-text";
 import DescriptionIcon from "@material-ui/icons/Description";
 export const TemplateIcon = DescriptionIcon;
-
+const { templates } = urls;
 export const TemplateList = (props) => (
   <List {...props}>
     <Datagrid>
@@ -36,7 +37,7 @@ export const TemplateList = (props) => (
 
       <BooleanField source="isActive" label="Active" />
 
-      <EditButton basePath="/Templates" />
+      <EditButton basePath={`/${templates}`} />
     </Datagrid>
   </List>
 );

@@ -1,6 +1,6 @@
 const url = {
-  users: "/User",
-  login: "/api/User/Authenticate",
+  users: "User",
+  login: "User/Authenticate",
   categories: "Categories",
   templates: "Templates",
 };

@@ -14,8 +14,10 @@ import {
   BooleanInput,
   PasswordInput,
 } from "react-admin";
+import urls from "../utils/apiUrls";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 export const UserIcon = AccountBoxIcon;
+const { users } = urls;
 
 export const UserList = (props) => (
   <List {...props}>
@@ -29,7 +31,7 @@ export const UserList = (props) => (
       <TextField source="createUser" label="Created by" />
       <DateField source="updateDate" label="Last updated at" />
       <TextField source="updateUser" label="Last updated by" />
-      <EditButton basePath="/User" />
+      <EditButton basePath={`/${users}`} />
     </Datagrid>
   </List>
 );
