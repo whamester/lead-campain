@@ -15,38 +15,47 @@ import {
   PasswordInput,
 } from "react-admin";
 import urls from "../utils/apiUrls";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-export const UserIcon = PersonOutlineIcon;
-const { users } = urls;
+import PersonPinIcon from "@material-ui/icons/PersonPin";
+export const ClientIcon = PersonPinIcon;
+const { clients } = urls;
 
-export const UserList = (props) => (
+export const ClientList = (props) => (
   <List {...props}>
     <Datagrid>
       <TextField source="id" label="ID" />
       <TextField source="name" label="Name" />
+      <TextField source="lastName" label="Surname" />
       <TextField source="email" label="Email" />
-      <BooleanField source="isSuperUser" label="Super user" />
+      <TextField source="phoneNumber" label="Phone number" />
       <BooleanField source="isActive" label="Active" />
       <DateField source="createDate" label="Created at" />
       <TextField source="createUser" label="Created by" />
       <DateField source="updateDate" label="Last updated at" />
       <TextField source="updateUser" label="Last updated by" />
-      <EditButton basePath={`/${users}`} />
+      <EditButton basePath={`/${clients}`} />
     </Datagrid>
   </List>
 );
 
-const UserTitle = ({ record }) => {
-  return <span>User {record ? `"${record.email}"` : ""}</span>;
+const ClientTitle = ({ record }) => {
+  return (
+    <span>Client {record ? `"${record.name} ${record.lastName}"` : ""}</span>
+  );
 };
 
-export const UserEdit = (props) => (
-  <Edit title={<UserTitle />} {...props}>
+export const ClientEdit = (props) => (
+  <Edit title={<ClientTitle />} {...props}>
     <SimpleForm>
       <TextField source="id" label="ID" />
       <TextInput source="name" validate={required()} label="Name" />
+      <TextInput source="lastName" validate={required()} label="Surname" />
       <TextInput source="email" validate={required()} label="Email" />
-      <BooleanField source="isSuperUser" label="Super user" />
+      <TextInput
+        source="phoneNumber"
+        validate={required()}
+        label="Phone number"
+      />
+
       <BooleanInput source="isActive" label="Active" />
       <DateField source="createDate" label="Created at" />
       <TextField source="createUser" label="Created by" />
@@ -56,14 +65,17 @@ export const UserEdit = (props) => (
   </Edit>
 );
 
-export const UserCreate = (props) => (
-  <Create title="Create a new user" {...props}>
+export const ClientCreate = (props) => (
+  <Create title="Create a new client" {...props}>
     <SimpleForm>
       <TextInput source="name" validate={required()} label="Name" />
+      <TextInput source="lastName" validate={required()} label="Surname" />
       <TextInput source="email" validate={required()} label="Email" />
-      <PasswordInput source="password" />
-      <PasswordInput source="cnfirmPassword" />
-      <BooleanInput source="isSuperUser" label="Super user" />
+      <TextInput
+        source="phoneNumber"
+        validate={required()}
+        label="Phone number"
+      />
       <BooleanInput source="isActive" label="Active" />
     </SimpleForm>
   </Create>

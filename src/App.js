@@ -29,9 +29,16 @@ import {
   CampainIcon,
 } from "./pages/campains";
 
+import {
+  ClientList,
+  ClientEdit,
+  ClientCreate,
+  ClientIcon,
+} from "./pages/clients";
+
 import "./App.css";
 
-const { users, categories, campains, templates } = urls;
+const { users, categories, campains, templates, clients } = urls;
 // const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
 const App = () => {
@@ -78,6 +85,13 @@ const App = () => {
         edit={CampainEdit}
         create={CampainCreate}
         icon={CampainIcon}
+      />
+      <Resource
+        name={clients}
+        list={ClientList}
+        edit={ClientEdit}
+        create={ClientCreate}
+        icon={ClientIcon}
       />
     </Admin>
   );

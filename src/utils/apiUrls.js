@@ -6,6 +6,7 @@ const url = {
   categories: "Categories",
   templates: "Templates",
   campains: "Campains",
+  clients: "Clients",
 };
 
 export default url;
