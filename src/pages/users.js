@@ -12,6 +12,7 @@ import {
   required,
   BooleanField,
   BooleanInput,
+  PasswordInput,
 } from "react-admin";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 export const UserIcon = AccountBoxIcon;
@@ -58,6 +59,8 @@ export const UserCreate = (props) => (
     <SimpleForm>
       <TextInput source="name" validate={required()} label="Name" />
       <TextInput source="email" validate={required()} label="Email" />
+      <PasswordInput source="password" />
+      <PasswordInput source="cnfirmPassword" />
       <BooleanInput source="isSuperUser" label="Super user" />
       <BooleanInput source="isActive" label="Active" />
     </SimpleForm>
