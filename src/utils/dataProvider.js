@@ -123,7 +123,31 @@ const dataProvider = {
         };
       });
   },
-  // deleteMany: (resource, params) => Promise,
+  deleteMany: (resource, params) => {
+    console.log(params);
+
+    const axiosRequests = Array.isArray(params.ids)
+      ? params.ids.map((id) => {
+          return axios.delete(`${resource}/${id}`);
+        })
+      : [];
+
+    return axios
+      .all(axiosRequests)
+      .then(
+        axios.spread((...responses) => {
+          return {
+            data: responses,
+          };
+        })
+      )
+      .catch((e) => {
+        console.log(e);
+        return {
+          data: {},
+        };
+      });
+  },
 };
 
 export default dataProvider;
