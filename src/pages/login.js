@@ -84,6 +84,9 @@ const Login = () => {
                       />
                     </Grid>
                     <Grid item>
+                      <Link href="/forgot-password">Forgot Password?</Link>
+                    </Grid>
+                    <Grid item>
                       <Button
                         variant="contained"
                         color="primary"
@@ -96,10 +99,9 @@ const Login = () => {
                   </Grid>
                 </form>
               </Grid>
+
               <Grid item>
-                <Link href="#" variant="body2">
-                  Forgot Password?
-                </Link>
+                <Link href="/#/signup">Don't have an account? Sign up!</Link>
               </Grid>
             </Paper>
           </Grid>

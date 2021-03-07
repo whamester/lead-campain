@@ -5,6 +5,7 @@ import LogoutButton from "./components/logoutButton";
 import authProvider from "./utils/authProvider";
 import dataProvider from "./utils/dataProvider";
 import urls from "./utils/apiUrls";
+import routes from "./utils/routes";
 import { UserList, UserEdit, UserCreate, UserIcon } from "./pages/users";
 
 import {
@@ -36,6 +37,7 @@ const { users, categories, campains, templates } = urls;
 const App = () => {
   return (
     <Admin
+      customRoutes={routes}
       dataProvider={dataProvider}
       authProvider={authProvider}
       loginPage={Login}

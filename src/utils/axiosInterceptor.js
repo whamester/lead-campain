@@ -1,6 +1,8 @@
 import axios from "axios";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { initSession } from "./storage";
+import urls from "./apiUrls";
+const { refreshToken: refresUrl } = urls;
 
 axios.defaults.baseURL = "http://localhost:9096/api";
 // axios.defaults.headers.common["Authorization"] =
@@ -10,7 +12,7 @@ axios.defaults.baseURL = "http://localhost:9096/api";
 // Function that will be called to refresh authorization
 const refreshAuthLogic = (failedRequest) =>
   axios
-    .post("/api/User/RefreshToken")
+    .post(refresUrl)
     .then((tokenRefreshResponse) => {
       const { jwtToken, refreshToken, ...rest } = tokenRefreshResponse?.data;
       initSession(rest, jwtToken, refreshToken);
@@ -29,11 +31,12 @@ createAuthRefreshInterceptor(axios, refreshAuthLogic);
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
-    // config.mode = "no-cors";
+    config.mode = "no-cors";
     config.headers = {
       // "Access-Control-Allow-Origin": "*",
       // "Access-Control-Allow-Methods": "POST,GET,PUT,DELETE",
       // "Access-Control-Allow-Headers": "Authorization, Lang",
+      // "Access-Control-Expose-Headers": "Content-Range",
       Accept: "application/json",
       "Content-Type": "application/json",
     };
