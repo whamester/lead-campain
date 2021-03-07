@@ -44,8 +44,17 @@ import {
 } from "./pages/sponsors";
 
 import "./App.css";
+import { SendIcon, SendList, SendShow } from "./pages/sends";
 
-const { users, categories, campains, templates, clients, sponsors } = urls;
+const {
+  users,
+  categories,
+  campains,
+  templates,
+  clients,
+  sponsors,
+  sends,
+} = urls;
 // const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
 const App = () => {
@@ -64,14 +73,6 @@ const App = () => {
         edit={UserEdit}
         create={UserCreate}
       />
-      {/* <Resource name="posts" icon={HomeIcon} list={ListGuesser} /> */}
-      {/* <Resource
-        name="posts"
-        list={PostList}
-        edit={PostEdit}
-        create={PostCreate}
-        icon={PostIcon}
-      /> */}
       <Resource
         name={categories}
         list={CategoryList}
@@ -108,6 +109,8 @@ const App = () => {
         create={SponsorCreate}
         icon={SponsorIcon}
       />
+
+      <Resource name={sends} list={SendList} show={SendShow} icon={SendIcon} />
     </Admin>
   );
 };

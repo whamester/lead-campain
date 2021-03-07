@@ -1,4 +1,4 @@
-import { useAuthProvider, Loading, Error } from "react-admin";
+import { useAuthProvider } from "react-admin";
 
 const useSignup = () => {
   const { signup } = useAuthProvider();

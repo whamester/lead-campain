@@ -10,7 +10,7 @@ import {
   Link,
 } from "@material-ui/core";
 import useSignup from "../hooks/useSignup";
-import { useLogin, useNotify } from "react-admin";
+import { useNotify } from "react-admin";
 
 const Signup = () => {
   const [email, setEmail] = useState("");

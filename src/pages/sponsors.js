@@ -12,7 +12,6 @@ import {
   required,
   BooleanField,
   BooleanInput,
-  PasswordInput,
 } from "react-admin";
 import urls from "../utils/apiUrls";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
