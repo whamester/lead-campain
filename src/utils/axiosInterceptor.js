@@ -1,18 +1,39 @@
 import axios from "axios";
+import createAuthRefreshInterceptor from "axios-auth-refresh";
+import { initSession } from "./storage";
 
 axios.defaults.baseURL = "http://localhost:9096/api";
 // axios.defaults.headers.common["Authorization"] =
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTAwNzU2NywiZXhwIjoxNjE1MDA4NDY3LCJpYXQiOjE2MTUwMDc1Njd9.lHgbDlchDn0S_zHA0BHDef4L3jpFjFPQk3ILsH9Trik";
 // axios.defaults.headers.post["Content-Type"] = "application/x-www-form-url";
 
+// Function that will be called to refresh authorization
+const refreshAuthLogic = (failedRequest) =>
+  axios
+    .post("/api/User/RefreshToken")
+    .then((tokenRefreshResponse) => {
+      const { jwtToken, refreshToken, ...rest } = tokenRefreshResponse?.data;
+      initSession(rest, jwtToken, refreshToken);
+      failedRequest.response.config.headers["Authorization"] =
+        "Bearer " + jwtToken;
+      return Promise.resolve();
+    })
+    .catch((e) => {
+      console.log(e);
+      return Promise.reject(e);
+    });
+
+// Instantiate the interceptor (you can chain it as it returns the axios instance)
+createAuthRefreshInterceptor(axios, refreshAuthLogic);
+
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
     // config.mode = "no-cors";
     config.headers = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST,GET,PUT,DELETE",
-      "Access-Control-Allow-Headers": "Authorization, Lang",
+      // "Access-Control-Allow-Origin": "*",
+      // "Access-Control-Allow-Methods": "POST,GET,PUT,DELETE",
+      // "Access-Control-Allow-Headers": "Authorization, Lang",
       Accept: "application/json",
       "Content-Type": "application/json",
     };

@@ -23,8 +23,8 @@ export const UserList = (props) => (
       <TextField source="id" label="ID" />
       <TextField source="name" label="Name" />
       <TextField source="email" label="Email" />
-      <TextField source="isSuperUser" label="Super user" />
-      <TextField source="isActive" label="Active" />
+      <BooleanField source="isSuperUser" label="Super user" />
+      <BooleanField source="isActive" label="Active" />
       <DateField source="createDate" label="Created at" />
       <TextField source="createUser" label="Created by" />
       <DateField source="updateDate" label="Last updated at" />
