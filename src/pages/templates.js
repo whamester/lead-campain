@@ -37,6 +37,10 @@ export const TemplateList = (props) => (
       />
 
       <BooleanField source="isActive" label="Active" />
+      <DateField source="createDate" label="Created at" />
+      <TextField source="createUser" label="Created by" />
+      <DateField source="updateDate" label="Last updated at" />
+      <TextField source="updateUser" label="Last updated by" />
 
       <EditButton basePath={`/${templates}`} />
     </Datagrid>

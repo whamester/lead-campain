@@ -4,7 +4,7 @@ import { initSession } from "./storage";
 import urls from "./apiUrls";
 const { refreshToken: refresUrl } = urls;
 
-axios.defaults.baseURL = "http://localhost:9096/api";
+axios.defaults.baseURL = "http://104.198.199.218/api";
 // axios.defaults.headers.common["Authorization"] =
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTAwNzU2NywiZXhwIjoxNjE1MDA4NDY3LCJpYXQiOjE2MTUwMDc1Njd9.lHgbDlchDn0S_zHA0BHDef4L3jpFjFPQk3ILsH9Trik";
 // axios.defaults.headers.post["Content-Type"] = "application/x-www-form-url";

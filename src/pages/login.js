@@ -84,7 +84,7 @@ const Login = () => {
                       />
                     </Grid>
                     <Grid item>
-                      <Link href="/forgot-password">Forgot Password?</Link>
+                      {/* <Link href="/forgot-password">Forgot Password?</Link> */}
                     </Grid>
                     <Grid item>
                       <Button

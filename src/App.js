@@ -110,7 +110,13 @@ const App = () => {
         icon={SponsorIcon}
       />
 
-      <Resource name={sends} list={SendList} show={SendShow} icon={SendIcon} />
+      <Resource
+        options={{ label: "Sent Campains History" }}
+        name={sends}
+        list={SendList}
+        show={SendShow}
+        icon={SendIcon}
+      />
     </Admin>
   );
 };
