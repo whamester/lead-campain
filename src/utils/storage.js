@@ -4,8 +4,8 @@ const refresh_item = "refresh";
 
 export const initSession = (data, jwtToken, refreshToken) => {
   localStorage.setItem(auth_item, JSON.stringify(data));
-  localStorage.setItem(token_item, JSON.stringify(jwtToken));
-  localStorage.setItem(refresh_item, JSON.stringify(refreshToken));
+  localStorage.setItem(token_item, jwtToken);
+  localStorage.setItem(refresh_item, refreshToken);
 };
 
 export const removeSession = () => {

@@ -9,9 +9,9 @@ const authProvider = {
     return axios
       .post(`${login}`, { username, password })
       .then((response) => {
-        console.log(response, username, password);
+        console.log(response?.data);
         if (response?.data?.success) {
-          const { jwtToken, refreshToken, ...rest } = response?.data;
+          const { jwtToken, refreshToken, ...rest } = response?.data?.data;
           initSession(rest, jwtToken, refreshToken);
 
           return { data: rest };

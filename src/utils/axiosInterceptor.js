@@ -1,10 +1,10 @@
 import axios from "axios";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
-import { initSession } from "./storage";
+import { getAuthRefresh, getAuthToken, initSession } from "./storage";
 import urls from "./apiUrls";
 const { refreshToken: refresUrl } = urls;
 
-axios.defaults.baseURL = "http://35.232.21.214//api";
+axios.defaults.baseURL = "http://104.154.208.47/api";
 // axios.defaults.headers.common["Authorization"] =
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTAwNzU2NywiZXhwIjoxNjE1MDA4NDY3LCJpYXQiOjE2MTUwMDc1Njd9.lHgbDlchDn0S_zHA0BHDef4L3jpFjFPQk3ILsH9Trik";
 // axios.defaults.headers.post["Content-Type"] = "application/x-www-form-url";
@@ -12,9 +12,16 @@ axios.defaults.baseURL = "http://35.232.21.214//api";
 // Function that will be called to refresh authorization
 const refreshAuthLogic = (failedRequest) =>
   axios
-    .post(refresUrl)
+    .post(refresUrl, {
+      token: getAuthRefresh(),
+    })
     .then((tokenRefreshResponse) => {
-      const { jwtToken, refreshToken, ...rest } = tokenRefreshResponse?.data;
+      const {
+        jwtToken,
+        refreshToken,
+        ...rest
+      } = tokenRefreshResponse?.data?.data;
+      console.log(tokenRefreshResponse);
       initSession(rest, jwtToken, refreshToken);
       failedRequest.response.config.headers["Authorization"] =
         "Bearer " + jwtToken;
@@ -37,6 +44,7 @@ axios.interceptors.request.use(
       // "Access-Control-Allow-Methods": "POST,GET,PUT,DELETE",
       // "Access-Control-Allow-Headers": "Authorization, Lang",
       // "Access-Control-Expose-Headers": "Content-Range",
+      Authorization: getAuthToken(),
       Accept: "application/json",
       "Content-Type": "application/json",
     };
