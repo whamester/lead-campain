@@ -44,7 +44,7 @@ import {
 } from "./pages/sponsors";
 
 import "./App.css";
-import { SendIcon, SendList, SendShow } from "./pages/sends";
+import { CreateNewSend, SendIcon, SendList, SendShow } from "./pages/sends";
 
 const {
   users,
@@ -116,6 +116,7 @@ const App = () => {
         list={SendList}
         show={SendShow}
         icon={SendIcon}
+        create={CreateNewSend}
       />
     </Admin>
   );

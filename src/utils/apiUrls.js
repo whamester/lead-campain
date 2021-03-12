@@ -9,6 +9,7 @@ const url = {
   clients: "Clients",
   sponsors: "Sponsor",
   sends: "Sends",
+  sendNewCampain: "Sends/Trigger",
 };
 
 export default url;

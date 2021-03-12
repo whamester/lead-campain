@@ -35,6 +35,7 @@ const dataProvider = {
       })
       .catch((e) => {
         console.log(e);
+        return Promise.reject(e);
       });
   },
   getOne: (resource, params) => {
@@ -61,7 +62,21 @@ const dataProvider = {
   // getManyReference: (resource, params) => Promise,
   create: (resource, params) => {
     console.log(params);
+    if (resource === "Sends") {
+      resource = "Sends/Trigger";
+      const { campainId, categosries, sendNow, templateId } = params.data;
 
+      params.data = {
+        send: {
+          templateId: parseInt(templateId),
+          campainId: parseInt(campainId),
+        },
+        sendNow,
+        categosries,
+      };
+
+      console.log(params.data);
+    }
     return axios
       .post(`${resource}`, params.data)
       .then((response) => {

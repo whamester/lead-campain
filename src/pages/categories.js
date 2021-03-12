@@ -58,7 +58,7 @@ export const CategoryCreate = (props) => (
     <SimpleForm>
       <TextInput source="name" validate={required()} label="Name" />
       <TextInput
-        source="descriprion"
+        source="description"
         validate={required()}
         label="Description"
       />

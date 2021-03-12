@@ -5,14 +5,21 @@ import {
   TextField,
   DateField,
   ShowButton,
+  required,
   Show,
   SimpleShowLayout,
+  SimpleForm,
+  AutocompleteInput,
+  TextInput,
+  useDataProvider,
+  BooleanInput,
+  Create,
 } from "react-admin";
 import urls from "../utils/apiUrls";
-
 import HistoryIcon from "@material-ui/icons/History";
+import dataProvider from "../utils/dataProvider";
 export const SendIcon = HistoryIcon;
-const { sends } = urls;
+const { sends, templates, campains } = urls;
 
 export const SendList = (props) => (
   <List {...props}>
@@ -53,4 +60,31 @@ export const SendShow = (props) => (
       <TextField source="updateUser" label="Last updated by" />
     </SimpleShowLayout>
   </Show>
+);
+
+export const CreateNewSend = (props) => (
+  <Create title="Create a new template" {...props}>
+    <SimpleForm>
+      <TextInput
+        type="number"
+        source="templateId"
+        validate={required()}
+        label="Template Id (WIP)"
+      />
+
+      <TextInput
+        type="number"
+        source="campainId"
+        validate={required()}
+        label="Campain Id (WIP)"
+      />
+      <TextInput
+        source="categosries"
+        validate={required()}
+        label="Categories"
+      />
+
+      <BooleanInput source="sendNow" label="Send now?" />
+    </SimpleForm>
+  </Create>
 );

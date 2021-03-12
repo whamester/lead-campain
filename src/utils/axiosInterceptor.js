@@ -4,10 +4,7 @@ import { getAuthRefresh, getAuthToken, initSession } from "./storage";
 import urls from "./apiUrls";
 const { refreshToken: refresUrl } = urls;
 
-axios.defaults.baseURL = "http://104.154.208.47/api";
-// axios.defaults.headers.common["Authorization"] =
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTAwNzU2NywiZXhwIjoxNjE1MDA4NDY3LCJpYXQiOjE2MTUwMDc1Njd9.lHgbDlchDn0S_zHA0BHDef4L3jpFjFPQk3ILsH9Trik";
-// axios.defaults.headers.post["Content-Type"] = "application/x-www-form-url";
+axios.defaults.baseURL = "http://34.70.35.125/api";
 
 // Function that will be called to refresh authorization
 const refreshAuthLogic = (failedRequest) =>
@@ -38,13 +35,9 @@ createAuthRefreshInterceptor(axios, refreshAuthLogic);
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
-    config.mode = "no-cors";
+    // config.mode = "no-cors";
     config.headers = {
-      // "Access-Control-Allow-Origin": "*",
-      // "Access-Control-Allow-Methods": "POST,GET,PUT,DELETE",
-      // "Access-Control-Allow-Headers": "Authorization, Lang",
-      // "Access-Control-Expose-Headers": "Content-Range",
-      Authorization: getAuthToken(),
+      Authorization: `Bearer ${getAuthToken()}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     };

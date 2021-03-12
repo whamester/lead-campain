@@ -20,6 +20,12 @@ import RichTextInput from "ra-input-rich-text";
 import DescriptionIcon from "@material-ui/icons/Description";
 export const TemplateIcon = DescriptionIcon;
 const { templates } = urls;
+
+const templateType = [
+  { id: 1, name: "Correo" },
+  { id: 2, name: "SMS" },
+];
+
 export const TemplateList = (props) => (
   <List {...props}>
     <Datagrid>
@@ -27,14 +33,7 @@ export const TemplateList = (props) => (
       <TextField source="name" label="Name" />
       <TextField source="subject" multiline label="Subject" />
 
-      <SelectField
-        source="idType"
-        label="Type"
-        choices={[
-          { id: "M", name: "Male" },
-          { id: "F", name: "Female" },
-        ]}
-      />
+      <SelectField source="idType" label="Type" choices={templateType} />
 
       <BooleanField source="isActive" label="Active" />
       <DateField source="createDate" label="Created at" />
@@ -66,11 +65,7 @@ export const TemplateEdit = (props) => (
         source="idType"
         validate={required()}
         label="Type"
-        choices={[
-          { id: "1", name: "Programming" },
-          { id: "2", name: "Lifestyle" },
-          { id: "3", name: "Photography" },
-        ]}
+        choices={templateType}
       />
 
       <RichTextInput
@@ -107,11 +102,7 @@ export const TemplateCreate = (props) => (
         source="idType"
         validate={required()}
         label="Type"
-        choices={[
-          { id: "1", name: "Programming" },
-          { id: "2", name: "Lifestyle" },
-          { id: "3", name: "Photography" },
-        ]}
+        choices={templateType}
       />
 
       <RichTextInput
