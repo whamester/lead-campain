@@ -19,7 +19,6 @@ const Login = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(username, password);
     login({ username, password }).catch(() =>
       notify("Invalid username or password")
     );

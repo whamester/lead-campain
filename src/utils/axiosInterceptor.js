@@ -18,7 +18,7 @@ const refreshAuthLogic = (failedRequest) =>
         refreshToken,
         ...rest
       } = tokenRefreshResponse?.data?.data;
-      console.log(tokenRefreshResponse);
+
       initSession(rest, jwtToken, refreshToken);
       failedRequest.response.config.headers["Authorization"] =
         "Bearer " + jwtToken;
@@ -42,7 +42,7 @@ axios.interceptors.request.use(
       "Content-Type": "application/json",
     };
     config.crossdomain = true;
-    console.log(config);
+
     // Do something before request is sent
     return config;
   },
@@ -55,7 +55,6 @@ axios.interceptors.request.use(
 // Add a response interceptor
 axios.interceptors.response.use(
   function (response) {
-    console.log(response);
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response;
