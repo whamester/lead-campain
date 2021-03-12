@@ -35,12 +35,34 @@ const dataProvider = {
       })
       .catch((e) => {
         console.log(e);
-        return Promise.reject(e);
+        return {
+          data: [],
+          total: 0,
+        };
+      });
+  },
+  getCatalog: (resource) => {
+    return axios(`${resource}`, {})
+      .then((response) => {
+        console.log(response);
+        if (response?.data?.success) {
+          const { items = [], totalCount = 0 } = response?.data?.data;
+          return { data: items, total: totalCount };
+        }
+        return {
+          data: [],
+          total: 0,
+        };
+      })
+      .catch((e) => {
+        console.log(e);
+        return {
+          data: [],
+          total: 0,
+        };
       });
   },
   getOne: (resource, params) => {
-    console.log(params);
-
     return axios(`${resource}/${params.id}`, {})
       .then((response) => {
         if (response?.data?.success) {
@@ -72,7 +94,7 @@ const dataProvider = {
           campainId: parseInt(campainId),
         },
         sendNow,
-        categosries,
+        categosries: Array.isArray(categosries) ? categosries.join(",") : "",
       };
 
       console.log(params.data);
@@ -99,7 +121,7 @@ const dataProvider = {
     console.log(params);
 
     return axios
-      .put(`${resource}/${params.id}`, { ...params.data })
+      .put(`${resource}`, { ...params.data })
       .then((response) => {
         if (response?.data?.success) {
           const { data = {} } = response?.data;

@@ -9,17 +9,19 @@ import {
   Show,
   SimpleShowLayout,
   SimpleForm,
-  AutocompleteInput,
-  TextInput,
-  useDataProvider,
   BooleanInput,
   Create,
+  SelectInput,
+  CheckboxGroupInput,
 } from "react-admin";
 import urls from "../utils/apiUrls";
 import HistoryIcon from "@material-ui/icons/History";
-import dataProvider from "../utils/dataProvider";
+import useCampainList from "../hooks/useCampainList";
+import useTemplateList from "../hooks/useTemplateList";
+import useCategoriesList from "../hooks/useCategoriesList";
+
 export const SendIcon = HistoryIcon;
-const { sends, templates, campains } = urls;
+const { sends } = urls;
 
 export const SendList = (props) => (
   <List {...props}>
@@ -62,29 +64,65 @@ export const SendShow = (props) => (
   </Show>
 );
 
-export const CreateNewSend = (props) => (
-  <Create title="Create a new template" {...props}>
-    <SimpleForm>
-      <TextInput
-        type="number"
-        source="templateId"
-        validate={required()}
-        label="Template Id (WIP)"
-      />
+export const CreateNewSend = (props) => {
+  const getCampainList = useCampainList();
+  const getTemplateList = useTemplateList();
+  const getCategoriesList = useCategoriesList();
 
-      <TextInput
-        type="number"
-        source="campainId"
-        validate={required()}
-        label="Campain Id (WIP)"
-      />
-      <TextInput
-        source="categosries"
-        validate={required()}
-        label="Categories"
-      />
+  const [campainList, setCampainList] = React.useState([]);
+  const [templateList, setTemplateList] = React.useState([]);
+  const [categoriesList, setCategoriesList] = React.useState([]);
 
-      <BooleanInput source="sendNow" label="Send now?" />
-    </SimpleForm>
-  </Create>
-);
+  React.useEffect(() => {
+    getCampainList()
+      .then(({ data }) => {
+        setCampainList(data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [getCampainList]);
+
+  React.useEffect(() => {
+    getCategoriesList()
+      .then(({ data }) => {
+        setCategoriesList(data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [getCategoriesList]);
+
+  React.useEffect(() => {
+    getTemplateList()
+      .then(({ data }) => {
+        setTemplateList(data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [getTemplateList]);
+
+  return (
+    <Create title="Send a campain" {...props}>
+      <SimpleForm>
+        <SelectInput
+          source="templateId"
+          validate={required()}
+          label="Template"
+          choices={templateList}
+        />
+        <SelectInput
+          source="campainId"
+          validate={required()}
+          label="Campain"
+          choices={campainList}
+        />
+
+        <CheckboxGroupInput source="categosries" choices={categoriesList} />
+
+        <BooleanInput source="sendNow" label="Send now?" />
+      </SimpleForm>
+    </Create>
+  );
+};
