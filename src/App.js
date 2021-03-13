@@ -55,7 +55,6 @@ const {
   sponsors,
   sends,
 } = urls;
-// const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
 const App = () => {
   return (
