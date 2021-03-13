@@ -28,14 +28,16 @@ export const CampainList = (props) => {
   const [sponsorList, setSponsorList] = useState([]);
 
   useEffect(() => {
-    getSponsorList()
-      .then(({ data }) => {
-        setSponsorList(data || []);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [getSponsorList]);
+    if (sponsorList.length === 0) {
+      getSponsorList()
+        .then(({ data }) => {
+          setSponsorList(data || []);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [getSponsorList, sponsorList]);
   return (
     <List {...props}>
       <Datagrid>
