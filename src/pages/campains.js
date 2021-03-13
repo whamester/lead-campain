@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import {
   List,
   Datagrid,
@@ -25,9 +25,9 @@ const { campains } = urls;
 export const CampainList = (props) => {
   const getSponsorList = useSponsorList();
 
-  const [sponsorList, setSponsorList] = React.useState([]);
+  const [sponsorList, setSponsorList] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getSponsorList()
       .then(({ data }) => {
         setSponsorList(data || []);
@@ -64,9 +64,9 @@ const CampainTitle = ({ record }) => {
 export const CampainEdit = (props) => {
   const getSponsorList = useSponsorList();
 
-  const [sponsorList, setSponsorList] = React.useState([]);
+  const [sponsorList, setSponsorList] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getSponsorList()
       .then(({ data }) => {
         setSponsorList(data || []);
