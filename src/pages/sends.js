@@ -5,12 +5,21 @@ import {
   TextField,
   DateField,
   ShowButton,
+  required,
   Show,
   SimpleShowLayout,
+  SimpleForm,
+  BooleanInput,
+  Create,
+  SelectInput,
+  CheckboxGroupInput,
 } from "react-admin";
 import urls from "../utils/apiUrls";
-
 import HistoryIcon from "@material-ui/icons/History";
+import useCampainList from "../hooks/useCampainList";
+import useTemplateList from "../hooks/useTemplateList";
+import useCategoriesList from "../hooks/useCategoriesList";
+
 export const SendIcon = HistoryIcon;
 const { sends } = urls;
 
@@ -54,3 +63,66 @@ export const SendShow = (props) => (
     </SimpleShowLayout>
   </Show>
 );
+
+export const CreateNewSend = (props) => {
+  const getCampainList = useCampainList();
+  const getTemplateList = useTemplateList();
+  const getCategoriesList = useCategoriesList();
+
+  const [campainList, setCampainList] = React.useState([]);
+  const [templateList, setTemplateList] = React.useState([]);
+  const [categoriesList, setCategoriesList] = React.useState([]);
+
+  React.useEffect(() => {
+    getCampainList()
+      .then(({ data }) => {
+        setCampainList(data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [getCampainList]);
+
+  React.useEffect(() => {
+    getCategoriesList()
+      .then(({ data }) => {
+        setCategoriesList(data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [getCategoriesList]);
+
+  React.useEffect(() => {
+    getTemplateList()
+      .then(({ data }) => {
+        setTemplateList(data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [getTemplateList]);
+
+  return (
+    <Create title="Send a campain" {...props}>
+      <SimpleForm>
+        <SelectInput
+          source="templateId"
+          validate={required()}
+          label="Template"
+          choices={templateList}
+        />
+        <SelectInput
+          source="campainId"
+          validate={required()}
+          label="Campain"
+          choices={campainList}
+        />
+
+        <CheckboxGroupInput source="categosries" choices={categoriesList} />
+
+        <BooleanInput source="sendNow" label="Send now?" />
+      </SimpleForm>
+    </Create>
+  );
+};
