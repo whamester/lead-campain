@@ -23,7 +23,6 @@ const dataProvider = {
       params: { pageSize, sortOn, sortDirection },
     })
       .then((response) => {
-        console.log(response);
         if (response?.data?.success) {
           const { items = [], totalCount = 0 } = response?.data?.data;
           return { data: items, total: totalCount };
@@ -35,11 +34,33 @@ const dataProvider = {
       })
       .catch((e) => {
         console.log(e);
+        return {
+          data: [],
+          total: 0,
+        };
+      });
+  },
+  getCatalog: (resource) => {
+    return axios(`${resource}`, {})
+      .then((response) => {
+        if (response?.data?.success) {
+          const { items = [], totalCount = 0 } = response?.data?.data;
+          return { data: items, total: totalCount };
+        }
+        return {
+          data: [],
+          total: 0,
+        };
+      })
+      .catch((e) => {
+        console.log(e);
+        return {
+          data: [],
+          total: 0,
+        };
       });
   },
   getOne: (resource, params) => {
-    console.log(params);
-
     return axios(`${resource}/${params.id}`, {})
       .then((response) => {
         if (response?.data?.success) {
@@ -60,8 +81,19 @@ const dataProvider = {
   // getMany:    (resource, params) => Promise,
   // getManyReference: (resource, params) => Promise,
   create: (resource, params) => {
-    console.log(params);
+    if (resource === "Sends") {
+      resource = "Sends/Trigger";
+      const { campainId, categosries, sendNow, templateId } = params.data;
 
+      params.data = {
+        send: {
+          templateId: parseInt(templateId),
+          campainId: parseInt(campainId),
+        },
+        sendNow,
+        categosries: Array.isArray(categosries) ? categosries.join(",") : "",
+      };
+    }
     return axios
       .post(`${resource}`, params.data)
       .then((response) => {
@@ -81,10 +113,8 @@ const dataProvider = {
       });
   },
   update: (resource, params) => {
-    console.log(params);
-
     return axios
-      .put(`${resource}/${params.id}`, { ...params.data })
+      .put(`${resource}`, { ...params.data })
       .then((response) => {
         if (response?.data?.success) {
           const { data = {} } = response?.data;
@@ -103,8 +133,6 @@ const dataProvider = {
   },
   // updateMany: (resource, params) => Promise,
   delete: (resource, params) => {
-    console.log(params);
-
     return axios
       .delete(`${resource}/${params.id}`)
       .then((response) => {
@@ -124,8 +152,6 @@ const dataProvider = {
       });
   },
   deleteMany: (resource, params) => {
-    console.log(params);
-
     const axiosRequests = Array.isArray(params.ids)
       ? params.ids.map((id) => {
           return axios.delete(`${resource}/${id}`);

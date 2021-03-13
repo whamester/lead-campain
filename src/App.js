@@ -44,7 +44,7 @@ import {
 } from "./pages/sponsors";
 
 import "./App.css";
-import { SendIcon, SendList, SendShow } from "./pages/sends";
+import { CreateNewSend, SendIcon, SendList, SendShow } from "./pages/sends";
 
 const {
   users,
@@ -55,7 +55,6 @@ const {
   sponsors,
   sends,
 } = urls;
-// const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
 const App = () => {
   return (
@@ -110,7 +109,14 @@ const App = () => {
         icon={SponsorIcon}
       />
 
-      <Resource name={sends} list={SendList} show={SendShow} icon={SendIcon} />
+      <Resource
+        options={{ label: "Sent Campains History" }}
+        name={sends}
+        list={SendList}
+        show={SendShow}
+        icon={SendIcon}
+        create={CreateNewSend}
+      />
     </Admin>
   );
 };
