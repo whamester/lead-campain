@@ -19,7 +19,6 @@ const Login = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(username, password);
     login({ username, password }).catch(() =>
       notify("Invalid username or password")
     );
@@ -83,9 +82,7 @@ const Login = () => {
                         required
                       />
                     </Grid>
-                    <Grid item>
-                      <Link href="/forgot-password">Forgot Password?</Link>
-                    </Grid>
+
                     <Grid item>
                       <Button
                         variant="contained"
