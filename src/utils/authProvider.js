@@ -9,9 +9,8 @@ const authProvider = {
     return axios
       .post(`${login}`, { username, password })
       .then((response) => {
-        console.log(response, username, password);
         if (response?.data?.success) {
-          const { jwtToken, refreshToken, ...rest } = response?.data;
+          const { jwtToken, refreshToken, ...rest } = response?.data?.data;
           initSession(rest, jwtToken, refreshToken);
 
           return { data: rest };
@@ -29,7 +28,7 @@ const authProvider = {
             name: "Wonnyo",
             email: "wonnyo@unifuture.com",
             jwtToken:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTEyODIxOCwiZXhwIjoxNjE1MTI5MTE4LCJpYXQiOjE2MTUxMjgyMTh9.bp3XdQ3MXPBDmaQzcxOBhTq_eSXw48uiosZWE4zhWr0",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTM0MjYyNCwiZXhwIjoxNjE1MzQ0NDI0LCJpYXQiOjE2MTUzNDI2MjR9.UIgKpx7v7zAXXExAaus9cLWxncfZ4lZrfOjhEebxBcE",
             refreshToken:
               "ak2RhsJp21oWP0qnXBvG/6VQR4Rf7g3YdzM7Wz81Gy0lpOKkMzL2G1EL0kbbfW6aPHCkyHpV1wp06CMoo/2Hng==",
           },
