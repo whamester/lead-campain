@@ -22,7 +22,7 @@ const Signup = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(email, password);
+
     if (password !== confirm) {
       console.log("Please confirm password");
       notify("Please confirm password");
