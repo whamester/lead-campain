@@ -22,9 +22,9 @@ export const CategoryList = (props) => (
       <TextField source="id" label="ID" />
       <TextField source="name" label="Name" />
       <TextField source="description" label="Description" />
-      <DateField source="createDate" label="Created at" />
+      <DateField source="createdDate" label="Created at" />
       <TextField source="createUser" label="Created by" />
-      <DateField source="updateDate" label="Last updated at" />
+      <DateField source="updatedDate" label="Last updated at" />
       <TextField source="updateUser" label="Last updated by" />
       <EditButton basePath={`/${categories}`} />
     </Datagrid>
@@ -45,9 +45,9 @@ export const CategoryEdit = (props) => (
         validate={required()}
         label="Description"
       />
-      <DateField source="createDate" label="Created at" />
+      <DateField source="createdDate" label="Created at" />
       <TextField source="createUser" label="Created by" />
-      <DateField source="updateDate" label="Last updated at" />
+      <DateField source="updatedDate" label="Last updated at" />
       <TextField source="updateUser" label="Last updated by" />
     </SimpleForm>
   </Edit>

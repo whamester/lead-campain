@@ -30,9 +30,9 @@ export const SendList = (props) => (
       <TextField source="templateName" label="Template name" />
       <TextField source="campainName" multiline label="Campain Name" />
 
-      <DateField source="createDate" label="Created at" />
+      <DateField source="createdDate" label="Created at" />
       <TextField source="createUser" label="Created by" />
-      <DateField source="updateDate" label="Last updated at" />
+      <DateField source="updatedDate" label="Last updated at" />
       <TextField source="updateUser" label="Last updated by" />
 
       <ShowButton basePath={`/${sends}`} />
@@ -56,9 +56,9 @@ export const SendShow = (props) => (
       <TextField source="templateName" label="Template name" />
       <TextField source="campainName" multiline label="Campain Name" />
 
-      <DateField source="createDate" label="Created at" />
+      <DateField source="createdDate" label="Created at" />
       <TextField source="createUser" label="Created by" />
-      <DateField source="updateDate" label="Last updated at" />
+      <DateField source="updatedDate" label="Last updated at" />
       <TextField source="updateUser" label="Last updated by" />
     </SimpleShowLayout>
   </Show>
@@ -74,34 +74,40 @@ export const CreateNewSend = (props) => {
   const [categoriesList, setCategoriesList] = React.useState([]);
 
   React.useEffect(() => {
-    getCampainList()
-      .then(({ data }) => {
-        setCampainList(data || []);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [getCampainList]);
+    if (!campainList.length) {
+      getCampainList()
+        .then(({ data }) => {
+          setCampainList(data || []);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [getCampainList, campainList]);
 
   React.useEffect(() => {
-    getCategoriesList()
-      .then(({ data }) => {
-        setCategoriesList(data || []);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [getCategoriesList]);
+    if (!categoriesList.length) {
+      getCategoriesList()
+        .then(({ data }) => {
+          setCategoriesList(data || []);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [getCategoriesList, categoriesList]);
 
   React.useEffect(() => {
-    getTemplateList()
-      .then(({ data }) => {
-        setTemplateList(data || []);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [getTemplateList]);
+    if (!templateList.length) {
+      getTemplateList()
+        .then(({ data }) => {
+          setTemplateList(data || []);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [getTemplateList, templateList]);
 
   return (
     <Create title="Send a campain" {...props}>

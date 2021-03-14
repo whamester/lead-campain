@@ -48,9 +48,9 @@ export const CampainList = (props) => {
         <SelectField source="sponsorId" label="Sponsor" choices={sponsorList} />
 
         <BooleanField source="isActive" label="Active" />
-        <DateField source="createDate" label="Created at" />
+        <DateField source="createdDate" label="Created at" />
         <TextField source="createUser" label="Created by" />
-        <DateField source="updateDate" label="Last updated at" />
+        <DateField source="updatedDate" label="Last updated at" />
         <TextField source="updateUser" label="Last updated by" />
 
         <EditButton basePath={`/${campains}`} />
