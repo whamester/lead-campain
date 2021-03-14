@@ -6,6 +6,8 @@ import authProvider from "./utils/authProvider";
 import dataProvider from "./utils/dataProvider";
 import urls from "./utils/apiUrls";
 import routes from "./utils/routes";
+import { createMuiTheme } from "@material-ui/core/styles";
+
 import { UserList, UserEdit, UserCreate, UserIcon } from "./pages/users";
 
 import {
@@ -46,6 +48,18 @@ import {
 import "./App.css";
 import { CreateNewSend, SendIcon, SendList, SendShow } from "./pages/sends";
 
+const theme = createMuiTheme({
+  palette: {
+    // type: "dark", // Switching the dark mode on is a single property value change.
+    primary: {
+      main: "#FA671C",
+    },
+    secondary: {
+      main: "#FA671C",
+    },
+  },
+});
+
 const {
   users,
   categories,
@@ -64,6 +78,7 @@ const App = () => {
       authProvider={authProvider}
       loginPage={Login}
       logoutButton={LogoutButton}
+      theme={theme}
     >
       <Resource
         name={users}

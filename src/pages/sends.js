@@ -13,6 +13,9 @@ import {
   Create,
   SelectInput,
   CheckboxGroupInput,
+  useNotify,
+  Toolbar,
+  SaveButton,
 } from "react-admin";
 import urls from "../utils/apiUrls";
 import HistoryIcon from "@material-ui/icons/History";
@@ -64,10 +67,20 @@ export const SendShow = (props) => (
   </Show>
 );
 
+const OnSend = ({ basePath, data, resource }) => (
+  <Toolbar>
+    <SaveButton />
+
+    {/* Add your custom actions */}
+    {/* <Button color="primary">Custom Action</Button> */}
+  </Toolbar>
+);
+
 export const CreateNewSend = (props) => {
   const getCampainList = useCampainList();
   const getTemplateList = useTemplateList();
   const getCategoriesList = useCategoriesList();
+  const notify = useNotify();
 
   const [campainList, setCampainList] = React.useState([]);
   const [templateList, setTemplateList] = React.useState([]);
@@ -82,8 +95,9 @@ export const CreateNewSend = (props) => {
         .catch((error) => {
           console.log(error);
         });
+      notify("Invalid username or password");
     }
-  }, [getCampainList, campainList]);
+  }, [getCampainList, notify, campainList]);
 
   React.useEffect(() => {
     if (!categoriesList.length) {
@@ -110,7 +124,7 @@ export const CreateNewSend = (props) => {
   }, [getTemplateList, templateList]);
 
   return (
-    <Create title="Send a campain" {...props}>
+    <Create {...props} title="Send a campain" save={() => console.log("Hola")}>
       <SimpleForm>
         <SelectInput
           source="templateId"
