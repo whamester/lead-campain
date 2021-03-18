@@ -1,6 +1,7 @@
 import React from "react";
 import { Admin, Resource } from "react-admin";
 import Login from "./pages/login";
+import Home from "./pages/home";
 import LogoutButton from "./components/logoutButton";
 import authProvider from "./utils/authProvider";
 import dataProvider from "./utils/dataProvider";
@@ -79,6 +80,7 @@ const App = () => {
       loginPage={Login}
       logoutButton={LogoutButton}
       theme={theme}
+      dashboard={Home}
     >
       <Resource
         name={users}
