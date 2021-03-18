@@ -1,4 +1,5 @@
 import axios from "./axiosInterceptor";
+import url from "../utils/apiUrls";
 
 // const token =
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTAwNTg3NSwiZXhwIjoxNjE1MDA2Nzc1LCJpYXQiOjE2MTUwMDU4NzV9._y3OKy1IPx7O7WoRv7ch14kd9c1WoJRr5Kd9OUP3_2E";
@@ -81,8 +82,8 @@ const dataProvider = {
   // getMany:    (resource, params) => Promise,
   // getManyReference: (resource, params) => Promise,
   create: (resource, params) => {
-    if (resource === "Sends") {
-      resource = "Sends/Trigger";
+    if (resource === url.sends) {
+      resource = url.sendNewCampain;
       const { campainId, categosries, sendNow, templateId } = params.data;
 
       params.data = {
@@ -94,6 +95,16 @@ const dataProvider = {
         categosries: Array.isArray(categosries) ? categosries.join(",") : "",
       };
     }
+
+    if (resource === url.clients) {
+      const { categosries, ...client } = params.data;
+
+      params.data = {
+        client,
+        categosries: Array.isArray(categosries) ? categosries.join(",") : "",
+      };
+    }
+
     return axios
       .post(`${resource}`, params.data)
       .then((response) => {
@@ -113,6 +124,15 @@ const dataProvider = {
       });
   },
   update: (resource, params) => {
+    if (resource === url.clients) {
+      const { categosries, ...client } = params.data;
+
+      params.data = {
+        client,
+        categosries: Array.isArray(categosries) ? categosries.join(",") : "",
+      };
+    }
+
     return axios
       .put(`${resource}`, { ...params.data })
       .then((response) => {

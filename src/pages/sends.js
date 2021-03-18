@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import {
   List,
   Datagrid,
@@ -82,11 +82,11 @@ export const CreateNewSend = (props) => {
   const getCategoriesList = useCategoriesList();
   const notify = useNotify();
 
-  const [campainList, setCampainList] = React.useState([]);
-  const [templateList, setTemplateList] = React.useState([]);
-  const [categoriesList, setCategoriesList] = React.useState([]);
+  const [campainList, setCampainList] = useState([]);
+  const [templateList, setTemplateList] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!campainList.length) {
       getCampainList()
         .then(({ data }) => {
@@ -95,11 +95,11 @@ export const CreateNewSend = (props) => {
         .catch((error) => {
           console.log(error);
         });
-      notify("Invalid username or password");
+      // notify("Invalid username or password");
     }
   }, [getCampainList, notify, campainList]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!categoriesList.length) {
       getCategoriesList()
         .then(({ data }) => {
@@ -111,7 +111,7 @@ export const CreateNewSend = (props) => {
     }
   }, [getCategoriesList, categoriesList]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!templateList.length) {
       getTemplateList()
         .then(({ data }) => {
@@ -139,7 +139,11 @@ export const CreateNewSend = (props) => {
           choices={campainList}
         />
 
-        <CheckboxGroupInput source="categosries" choices={categoriesList} />
+        <CheckboxGroupInput
+          source="categosries"
+          label="Categories"
+          choices={categoriesList}
+        />
 
         <BooleanInput source="sendNow" label="Send now?" />
       </SimpleForm>

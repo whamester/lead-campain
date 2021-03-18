@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import {
   List,
   Datagrid,
@@ -12,9 +12,11 @@ import {
   required,
   BooleanField,
   BooleanInput,
+  CheckboxGroupInput,
 } from "react-admin";
 import urls from "../utils/apiUrls";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
+import useCategoriesList from "../hooks/useCategoriesList";
 export const ClientIcon = PersonPinIcon;
 const { clients } = urls;
 
@@ -64,18 +66,41 @@ export const ClientEdit = (props) => (
   </Edit>
 );
 
-export const ClientCreate = (props) => (
-  <Create title="Create a new client" {...props}>
-    <SimpleForm>
-      <TextInput source="name" validate={required()} label="Name" />
-      <TextInput source="lastName" validate={required()} label="Surname" />
-      <TextInput source="email" validate={required()} label="Email" />
-      <TextInput
-        source="phoneNumber"
-        validate={required()}
-        label="Phone number"
-      />
-      <BooleanInput source="isActive" label="Active" />
-    </SimpleForm>
-  </Create>
-);
+export const ClientCreate = (props) => {
+  const getCategoriesList = useCategoriesList();
+
+  const [categoriesList, setCategoriesList] = useState([]);
+
+  useEffect(() => {
+    if (!categoriesList.length) {
+      getCategoriesList()
+        .then(({ data }) => {
+          setCategoriesList(data || []);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [getCategoriesList, categoriesList]);
+
+  return (
+    <Create title="Create a new client" {...props}>
+      <SimpleForm>
+        <TextInput source="name" validate={required()} label="Name" />
+        <TextInput source="lastName" validate={required()} label="Surname" />
+        <TextInput source="email" validate={required()} label="Email" />
+        <TextInput
+          source="phoneNumber"
+          validate={required()}
+          label="Phone number"
+        />
+        <CheckboxGroupInput
+          source="categosries"
+          label="Categories"
+          choices={categoriesList}
+        />
+        <BooleanInput source="isActive" label="Active" />
+      </SimpleForm>
+    </Create>
+  );
+};
