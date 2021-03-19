@@ -1,0 +1,3 @@
+export const SENDS = {
+  CLIENT_BY_CATEGORES: "SENDS_CLIENT_BY_CATEGORES",
+};

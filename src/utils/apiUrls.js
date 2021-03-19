@@ -10,6 +10,8 @@ const url = {
   sponsors: "Sponsor",
   sends: "Sends",
   sendNewCampain: "Sends/Trigger",
+  clientsByCategories: (categoryId = "") => `Clients/Categories/${categoryId}`,
+  clientsBySend: (sendId = "") => `Clients/Send/${sendId}`,
 };
 
 export default url;
