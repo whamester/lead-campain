@@ -69,14 +69,16 @@ export const CampainEdit = (props) => {
   const [sponsorList, setSponsorList] = useState([]);
 
   useEffect(() => {
-    getSponsorList()
-      .then(({ data }) => {
-        setSponsorList(data || []);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [getSponsorList]);
+    if (!sponsorList.length) {
+      getSponsorList()
+        .then(({ data }) => {
+          setSponsorList(data || []);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [getSponsorList, sponsorList]);
   return (
     <Edit title={<CampainTitle />} {...props}>
       <SimpleForm>
@@ -99,26 +101,40 @@ export const CampainEdit = (props) => {
   );
 };
 
-export const CampainCreate = (props) => (
-  <Create title="Create a new campain" {...props}>
-    <SimpleForm>
-      <TextInput source="name" label="Name" validate={required()} />
-      <RichTextInput
-        source="description"
-        label="Description"
-        validate={required()}
-      />
-      <AutocompleteInput
-        source="sponsorId"
-        validate={required()}
-        label="Sponsor"
-        choices={[
-          { id: "1", name: "Programming" },
-          { id: "2", name: "Lifestyle" },
-          { id: "3", name: "Photography" },
-        ]}
-      />
-      <BooleanInput source="isActive" label="Active" />
-    </SimpleForm>
-  </Create>
-);
+export const CampainCreate = (props) => {
+  const getSponsorList = useSponsorList();
+
+  const [sponsorList, setSponsorList] = useState([]);
+
+  useEffect(() => {
+    if (!sponsorList.length) {
+      getSponsorList()
+        .then(({ data }) => {
+          setSponsorList(data || []);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [getSponsorList, sponsorList]);
+
+  return (
+    <Create title="Create a new campain" {...props}>
+      <SimpleForm>
+        <TextInput source="name" label="Name" validate={required()} />
+        <RichTextInput
+          source="description"
+          label="Description"
+          validate={required()}
+        />
+        <AutocompleteInput
+          source="sponsorId"
+          validate={required()}
+          label="Sponsor"
+          choices={sponsorList}
+        />
+        <BooleanInput source="isActive" label="Active" />
+      </SimpleForm>
+    </Create>
+  );
+};
