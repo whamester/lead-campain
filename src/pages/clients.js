@@ -13,15 +13,17 @@ import {
   BooleanField,
   BooleanInput,
   CheckboxGroupInput,
+  FormDataConsumer,
 } from "react-admin";
 import urls from "../utils/apiUrls";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import useCategoriesList from "../hooks/useCategoriesList";
+import CategoriesFilter from "../components/categoriesFilter";
 export const ClientIcon = PersonPinIcon;
 const { clients } = urls;
 
 export const ClientList = (props) => (
-  <List {...props}>
+  <List {...props} filters={<CategoriesFilter />}>
     <Datagrid>
       <TextField source="id" label="ID" />
       <TextField source="name" label="Name" />
@@ -44,27 +46,62 @@ const ClientTitle = ({ record }) => {
   );
 };
 
-export const ClientEdit = (props) => (
-  <Edit title={<ClientTitle />} {...props}>
-    <SimpleForm>
-      <TextField source="id" label="ID" />
-      <TextInput source="name" validate={required()} label="Name" />
-      <TextInput source="lastName" validate={required()} label="Surname" />
-      <TextInput source="email" validate={required()} label="Email" />
-      <TextInput
-        source="phoneNumber"
-        validate={required()}
-        label="Phone number"
-      />
+export const ClientEdit = (props) => {
+  const getCategoriesList = useCategoriesList();
 
-      <BooleanInput source="isActive" label="Active" />
-      <DateField source="createdDate" label="Created at" />
-      <TextField source="createUser" label="Created by" />
-      <DateField source="updatedDate" label="Last updated at" />
-      <TextField source="updateUser" label="Last updated by" />
-    </SimpleForm>
-  </Edit>
-);
+  const [categoriesList, setCategoriesList] = useState([]);
+
+  useEffect(() => {
+    if (!categoriesList.length) {
+      getCategoriesList()
+        .then(({ data }) => {
+          setCategoriesList(data || []);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [getCategoriesList, categoriesList]);
+
+  return (
+    <Edit title={<ClientTitle />} {...props}>
+      <SimpleForm>
+        <TextField source="id" label="ID" />
+        <TextInput source="name" validate={required()} label="Name" />
+        <TextInput source="lastName" validate={required()} label="Surname" />
+        <TextInput source="email" validate={required()} label="Email" />
+        <TextInput
+          source="phoneNumber"
+          validate={required()}
+          label="Phone number"
+        />
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) => {
+            console.log(formData);
+            console.log(rest);
+
+            return (
+              <CheckboxGroupInput
+                {...rest}
+                source="categories"
+                label="Categories"
+                choices={categoriesList}
+                defaultChecked={formData.categories}
+              />
+            );
+          }}
+        </FormDataConsumer>
+
+        <BooleanInput source="isActive" label="Active" />
+        <DateField source="createdDate" label="Created at" />
+        <TextField source="createUser" label="Created by" />
+        <DateField source="updatedDate" label="Last updated at" />
+        <TextField source="updateUser" label="Last updated by" />
+      </SimpleForm>
+    </Edit>
+  );
+};
 
 export const ClientCreate = (props) => {
   const getCategoriesList = useCategoriesList();
@@ -95,7 +132,7 @@ export const ClientCreate = (props) => {
           label="Phone number"
         />
         <CheckboxGroupInput
-          source="categosries"
+          source="categories"
           label="Categories"
           choices={categoriesList}
         />
