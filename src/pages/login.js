@@ -7,9 +7,24 @@ import {
   AppBar,
   Typography,
   Toolbar,
+  ThemeProvider,
   // Link,
 } from "@material-ui/core";
 import { useLogin, useNotify } from "react-admin";
+import { createMuiTheme } from "@material-ui/core/styles";
+import logo2 from "../images/logo2.png";
+
+const theme = createMuiTheme({
+  palette: {
+    // type: "dark", // Switching the dark mode on is a single property value change.
+    primary: {
+      main: "#FA671C",
+    },
+    secondary: {
+      main: "#FA671C",
+    },
+  },
+});
 
 const Login = () => {
   const [username, setEmail] = useState("");
@@ -29,12 +44,14 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <AppBar position="static" alignitems="center" color="primary">
         <Toolbar>
           <Grid container justify="center" wrap="wrap">
             <Grid item>
-              <Typography variant="h6">Lead Campains</Typography>
+              <div>
+                <img src={logo2} width={160} title="ntify" />
+              </div>
             </Grid>
           </Grid>
         </Toolbar>
@@ -108,7 +125,7 @@ const Login = () => {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </ThemeProvider>
   );
 };
 

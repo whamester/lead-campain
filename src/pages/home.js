@@ -29,7 +29,7 @@ const Home = () => {
               </Grid>
               <Grid item>
                 <div>
-                  <img src={logo1} width={500} title="meow" />
+                  <img src={logo1} width={500} title="notify" />
                 </div>
               </Grid>
 
