@@ -1,11 +1,8 @@
 import React from "react";
 import { Grid, Paper, Typography, Link } from "@material-ui/core";
 import logo2 from "../images/logo2.png";
-import { getAuthData } from "../utils/storage";
 
 const About = () => {
-  const data = JSON.parse(getAuthData());
-  console.log(data);
   return (
     <div>
       <Grid container spacing={0} justify="center" direction="row">

@@ -1,5 +1,6 @@
 import axios from "./axiosInterceptor";
 import urls from "./apiUrls";
+import { encryptData } from "./index";
 import { getAuthData, initSession, removeSession } from "./storage";
 
 const { login, signup } = urls;
@@ -7,7 +8,7 @@ const { login, signup } = urls;
 const authProvider = {
   login: ({ username, password }) => {
     return axios
-      .post(`${login}`, { username, password })
+      .post(`${login}`, { username, password: encryptData(password) })
       .then((response) => {
         if (response?.data?.success) {
           const { jwtToken, refreshToken, ...rest } = response?.data?.data;
@@ -20,32 +21,13 @@ const authProvider = {
         };
       })
       .catch((e) => {
-        // localStorage.removeItem(auth_item);
-        // throw new Error(e);
-        const response = {
-          data: {
-            id: 3,
-            name: "Wonnyo",
-            email: "wonnyo@unifuture.com",
-            jwtToken:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTM0MjYyNCwiZXhwIjoxNjE1MzQ0NDI0LCJpYXQiOjE2MTUzNDI2MjR9.UIgKpx7v7zAXXExAaus9cLWxncfZ4lZrfOjhEebxBcE",
-            refreshToken:
-              "ak2RhsJp21oWP0qnXBvG/6VQR4Rf7g3YdzM7Wz81Gy0lpOKkMzL2G1EL0kbbfW6aPHCkyHpV1wp06CMoo/2Hng==",
-          },
-          message: "Ingreso exitoso.",
-          success: true,
-        };
-        const { jwtToken, refreshToken, ...rest } = response?.data;
-        initSession(rest, jwtToken, refreshToken);
-
-        return response;
+        throw new Error(e);
       });
   },
   signup: ({ name, email, password }) => {
     return axios
-      .post(`${signup}`, { name, email, password })
+      .post(`${signup}`, { name, email, password: encryptData(password) })
       .then((response) => {
-        console.log(response);
         if (response?.data?.success) {
           const userData = response?.data?.user;
           const { jwtToken, refreshToken } = response?.data?.auth;
@@ -59,25 +41,7 @@ const authProvider = {
         };
       })
       .catch((e) => {
-        // localStorage.removeItem(auth_item);
-        // throw new Error(e);
-        const response = {
-          data: {
-            id: 3,
-            name: "Wonnyo",
-            email: "wonnyo@unifuture.com",
-            jwtToken:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTEyODIxOCwiZXhwIjoxNjE1MTI5MTE4LCJpYXQiOjE2MTUxMjgyMTh9.bp3XdQ3MXPBDmaQzcxOBhTq_eSXw48uiosZWE4zhWr0",
-            refreshToken:
-              "ak2RhsJp21oWP0qnXBvG/6VQR4Rf7g3YdzM7Wz81Gy0lpOKkMzL2G1EL0kbbfW6aPHCkyHpV1wp06CMoo/2Hng==",
-          },
-          message: "Ingreso exitoso.",
-          success: true,
-        };
-        const { jwtToken, refreshToken, ...rest } = response?.data;
-        initSession(rest, jwtToken, refreshToken);
-
-        return response;
+        throw new Error(e);
       });
   },
   checkAuth: () =>

@@ -4,7 +4,7 @@ import { getAuthRefresh, getAuthToken, initSession } from "./storage";
 import urls from "./apiUrls";
 const { refreshToken: refresUrl } = urls;
 
-axios.defaults.baseURL = "http://35.225.126.129/api";
+axios.defaults.baseURL = "http://35.202.192.255/api";
 
 // Function that will be called to refresh authorization
 const refreshAuthLogic = (failedRequest) =>

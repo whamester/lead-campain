@@ -7,6 +7,7 @@ import authProvider from "./utils/authProvider";
 import dataProvider from "./utils/dataProvider";
 import urls from "./utils/apiUrls";
 import routes from "./utils/routes";
+import sendsReducer from "./redux/sends/reducer";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 import { UserList, UserEdit, UserCreate, UserIcon } from "./pages/users";
@@ -81,6 +82,7 @@ const App = () => {
       logoutButton={LogoutButton}
       theme={theme}
       dashboard={Home}
+      customReducers={{ sends: sendsReducer }}
     >
       <Resource
         name={users}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Paper, Typography, Link } from "@material-ui/core";
-// import logo1 from "../images/logo1.jpg";
+import logo1 from "../images/logo1.jpg";
 import { getAuthData } from "../utils/storage";
 
 const Home = () => {
@@ -29,7 +29,7 @@ const Home = () => {
               </Grid>
               <Grid item>
                 <div>
-                  {/* <img src="~/images/logo1.jpg" width={500} title="meow" /> */}
+                  <img src={logo1} width={500} title="meow" />
                 </div>
               </Grid>
 

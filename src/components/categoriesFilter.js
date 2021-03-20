@@ -1,9 +1,11 @@
+import { useNotify } from "react-admin";
 import { CheckboxGroupInput, Filter } from "ra-ui-materialui";
 import React, { useEffect, useState } from "react";
 import useCategoriesList from "../hooks/useCategoriesList";
 
 const CategoriesFilter = (props) => {
   const getCategoriesList = useCategoriesList();
+  const notify = useNotify();
 
   const [categoriesList, setCategoriesList] = useState([]);
 
@@ -14,7 +16,7 @@ const CategoriesFilter = (props) => {
           setCategoriesList(data || []);
         })
         .catch((error) => {
-          console.log(error);
+          notify("Oops! Something went wrong " + error.message, "error");
         });
     }
   }, [getCategoriesList, categoriesList]);

@@ -1,31 +1,25 @@
 import axios from "./axiosInterceptor";
 import url from "../utils/apiUrls";
 
-// const token =
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMiLCJOYW1lIjoiV29ubnlvIiwiRW1haWwiOiJ3b25ueW9AdW5pZnV0dXJlLmNvbSIsIm5iZiI6MTYxNTAwNTg3NSwiZXhwIjoxNjE1MDA2Nzc1LCJpYXQiOjE2MTUwMDU4NzV9._y3OKy1IPx7O7WoRv7ch14kd9c1WoJRr5Kd9OUP3_2E";
-
-// const fetchRequest = (url, options = {}) => {
-//   if (!options.headers) {
-//     options.headers = new Headers({ Accept: "application/json" });
-//   }
-//   // add your own headers here
-//   options.headers.set("Authorization", token);
-//   options.headers.set("Access-Control-Allow-Origin", "*");
-
-//   return fetchUtils.fetchJson(url, options);
-// };
-
 const dataProvider = {
   getList: (resource, params) => {
     const { page, perPage: pageSize } = params.pagination;
     const { field: sortOn, order: sortDirection } = params.sort;
+    const { categories } = params?.filter;
 
     return axios(`${resource}/Page/${page}`, {
-      params: { pageSize, sortOn, sortDirection },
+      params: {
+        pageSize,
+        sortOn,
+        sortDirection,
+        categories: Array.isArray(categories) ? categories.join(",") : "",
+        categoriesId: Array.isArray(categories) ? categories.join(",") : "",
+      },
     })
       .then((response) => {
         if (response?.data?.success) {
           const { items = [], totalCount = 0 } = response?.data?.data;
+
           return { data: items, total: totalCount };
         }
         return {
@@ -34,7 +28,6 @@ const dataProvider = {
         };
       })
       .catch((e) => {
-        console.log(e);
         return {
           data: [],
           total: 0,
@@ -54,7 +47,50 @@ const dataProvider = {
         };
       })
       .catch((e) => {
-        console.log(e);
+        return {
+          data: [],
+          total: 0,
+        };
+      });
+  },
+  getClientsByCategory: (params) => {
+    return axios(url.clientsByCategories(params.categories))
+      .then((response) => {
+        if (response?.data?.success) {
+          const { data = [] } = response?.data;
+          return {
+            data,
+            total: Array.isArray(data) ? data.length : 0,
+          };
+        }
+        return {
+          data: [],
+          total: 0,
+        };
+      })
+      .catch((e) => {
+        return {
+          data: [],
+          total: 0,
+        };
+      });
+  },
+  getClientsBySendId: (params) => {
+    return axios(url.clientsBySend(params.sendId))
+      .then((response) => {
+        if (response?.data?.success) {
+          const { data = [] } = response?.data;
+          return {
+            data,
+            total: Array.isArray(data) ? data.length : 0,
+          };
+        }
+        return {
+          data: [],
+          total: 0,
+        };
+      })
+      .catch((e) => {
         return {
           data: [],
           total: 0,
@@ -66,14 +102,22 @@ const dataProvider = {
       .then((response) => {
         if (response?.data?.success) {
           const { data = {} } = response?.data;
-          return { data };
+          if (`${resource}` === `${url.clients}`) {
+            data.client = {
+              ...data?.client,
+              categories: Array.isArray(data?.categories)
+                ? data?.categories.map(({ id }) => id)
+                : [],
+            };
+          }
+
+          return { data: {} };
         }
         return {
           data: {},
         };
       })
       .catch((e) => {
-        console.log(e);
         return {
           data: {},
         };
@@ -84,7 +128,7 @@ const dataProvider = {
   create: (resource, params) => {
     if (resource === url.sends) {
       resource = url.sendNewCampain;
-      const { campainId, categosries, sendNow, templateId } = params.data;
+      const { campainId, categories, sendNow, templateId } = params.data;
 
       params.data = {
         send: {
@@ -92,16 +136,16 @@ const dataProvider = {
           campainId: parseInt(campainId),
         },
         sendNow,
-        categosries: Array.isArray(categosries) ? categosries.join(",") : "",
+        categories: Array.isArray(categories) ? categories.join(",") : "",
       };
     }
 
     if (resource === url.clients) {
-      const { categosries, ...client } = params.data;
+      const { categories, ...client } = params.data;
 
       params.data = {
         client,
-        categosries: Array.isArray(categosries) ? categosries.join(",") : "",
+        categories: Array.isArray(categories) ? categories.join(",") : "",
       };
     }
 
@@ -117,7 +161,6 @@ const dataProvider = {
         };
       })
       .catch((e) => {
-        console.log(e);
         return {
           data: {},
         };
@@ -125,11 +168,11 @@ const dataProvider = {
   },
   update: (resource, params) => {
     if (resource === url.clients) {
-      const { categosries, ...client } = params.data;
+      const { categories, ...client } = params.data;
 
       params.data = {
         client,
-        categosries: Array.isArray(categosries) ? categosries.join(",") : "",
+        categories: Array.isArray(categories) ? categories.join(",") : "",
       };
     }
 
@@ -145,7 +188,6 @@ const dataProvider = {
         };
       })
       .catch((e) => {
-        console.log(e);
         return {
           data: {},
         };
@@ -165,7 +207,6 @@ const dataProvider = {
         };
       })
       .catch((e) => {
-        console.log(e);
         return {
           data: {},
         };
@@ -188,7 +229,28 @@ const dataProvider = {
         })
       )
       .catch((e) => {
-        console.log(e);
+        return {
+          data: {},
+        };
+      });
+  },
+  resendMany: (resource, params) => {
+    const axiosRequests = Array.isArray(params.ids)
+      ? params.ids.map((id) => {
+          return axios.post(`${resource}`, { send: { id }, sendNow: true });
+        })
+      : [];
+
+    return axios
+      .all(axiosRequests)
+      .then(
+        axios.spread((...responses) => {
+          return {
+            data: responses,
+          };
+        })
+      )
+      .catch((e) => {
         return {
           data: {},
         };

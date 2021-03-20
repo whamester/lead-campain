@@ -14,6 +14,7 @@ import {
   BooleanInput,
   CheckboxGroupInput,
   FormDataConsumer,
+  useNotify,
 } from "react-admin";
 import urls from "../utils/apiUrls";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
@@ -48,6 +49,7 @@ const ClientTitle = ({ record }) => {
 
 export const ClientEdit = (props) => {
   const getCategoriesList = useCategoriesList();
+  const notify = useNotify();
 
   const [categoriesList, setCategoriesList] = useState([]);
 
@@ -58,7 +60,7 @@ export const ClientEdit = (props) => {
           setCategoriesList(data || []);
         })
         .catch((error) => {
-          console.log(error);
+          notify("Oops! Something went wrong " + error.message, "error");
         });
     }
   }, [getCategoriesList, categoriesList]);
@@ -78,9 +80,6 @@ export const ClientEdit = (props) => {
 
         <FormDataConsumer>
           {({ formData, ...rest }) => {
-            console.log(formData);
-            console.log(rest);
-
             return (
               <CheckboxGroupInput
                 {...rest}
@@ -105,6 +104,7 @@ export const ClientEdit = (props) => {
 
 export const ClientCreate = (props) => {
   const getCategoriesList = useCategoriesList();
+  const notify = useNotify();
 
   const [categoriesList, setCategoriesList] = useState([]);
 
@@ -115,7 +115,7 @@ export const ClientCreate = (props) => {
           setCategoriesList(data || []);
         })
         .catch((error) => {
-          console.log(error);
+          notify("Oops! Something went wrong " + error.message, "error");
         });
     }
   }, [getCategoriesList, categoriesList]);

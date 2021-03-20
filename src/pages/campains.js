@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   List,
   Datagrid,
@@ -14,30 +14,42 @@ import {
   BooleanInput,
   SelectField,
   AutocompleteInput,
+  useNotify,
+  useDataProvider,
 } from "react-admin";
 import urls from "../utils/apiUrls";
 import RichTextInput from "ra-input-rich-text";
 import SendIcon from "@material-ui/icons/Send";
 import useSponsorList from "../hooks/useSponsorList";
-export const CampainIcon = SendIcon;
+
 const { campains } = urls;
 
+export const CampainIcon = SendIcon;
+
 export const CampainList = (props) => {
-  const getSponsorList = useSponsorList();
+  const { getList } = useDataProvider();
+  const notify = useNotify();
 
   const [sponsorList, setSponsorList] = useState([]);
 
+  const getSponsors = useCallback(() => {
+    getList(urls.sponsors, {
+      pagination: { perPage: 1000, page: 1 },
+      sort: {},
+      filter: {},
+    })
+      .then((response) => {
+        setSponsorList(response?.data || []);
+      })
+      .catch((error) => {
+        notify("Oops! Something went wrong " + error.message, "error");
+      });
+  }, []);
+
   useEffect(() => {
-    if (sponsorList.length === 0) {
-      getSponsorList()
-        .then(({ data }) => {
-          setSponsorList(data || []);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [getSponsorList, sponsorList]);
+    getSponsors();
+  }, [getSponsors]);
+
   return (
     <List {...props}>
       <Datagrid>
@@ -65,6 +77,7 @@ const CampainTitle = ({ record }) => {
 
 export const CampainEdit = (props) => {
   const getSponsorList = useSponsorList();
+  const notify = useNotify();
 
   const [sponsorList, setSponsorList] = useState([]);
 
@@ -75,7 +88,7 @@ export const CampainEdit = (props) => {
           setSponsorList(data || []);
         })
         .catch((error) => {
-          console.log(error);
+          notify("Oops! Something went wrong " + error.message, "error");
         });
     }
   }, [getSponsorList, sponsorList]);
@@ -103,6 +116,7 @@ export const CampainEdit = (props) => {
 
 export const CampainCreate = (props) => {
   const getSponsorList = useSponsorList();
+  const notify = useNotify();
 
   const [sponsorList, setSponsorList] = useState([]);
 
@@ -113,7 +127,7 @@ export const CampainCreate = (props) => {
           setSponsorList(data || []);
         })
         .catch((error) => {
-          console.log(error);
+          notify("Oops! Something went wrong " + error.message, "error");
         });
     }
   }, [getSponsorList, sponsorList]);

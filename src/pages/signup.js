@@ -24,7 +24,6 @@ const Signup = () => {
     e.preventDefault();
 
     if (password !== confirm) {
-      console.log("Please confirm password");
       notify("Please confirm password");
       return;
     }
