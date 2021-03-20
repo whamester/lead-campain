@@ -62,7 +62,7 @@ export const UserCreate = (props) => (
       <TextInput source="name" validate={required()} label="Name" />
       <TextInput source="email" validate={required()} label="Email" />
       <PasswordInput source="password" />
-      <PasswordInput source="cnfirmPassword" />
+      {/* <PasswordInput source="confirmPassword" /> */}
       <BooleanInput source="isSuperUser" label="Super user" />
       <BooleanInput source="isActive" label="Active" />
     </SimpleForm>

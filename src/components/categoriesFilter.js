@@ -12,7 +12,7 @@ const CategoriesFilter = (props) => {
   useEffect(() => {
     if (!categoriesList.length) {
       getCategoriesList()
-        .then(({ data }) => {
+        .then(({ data } = {}) => {
           setCategoriesList(data || []);
         })
         .catch((error) => {

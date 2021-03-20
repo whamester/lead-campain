@@ -206,7 +206,7 @@ export const CreateNewSend = (props) => {
   const getCampains = useCallback(() => {
     if (!campainList.length) {
       getCampainList()
-        .then(({ data }) => {
+        .then(({ data } = {}) => {
           setCampainList(data || []);
         })
         .catch((error) => {
@@ -222,7 +222,7 @@ export const CreateNewSend = (props) => {
   const getCategories = useCallback(() => {
     if (!categoriesList.length) {
       getCategoriesList()
-        .then(({ data }) => {
+        .then(({ data } = {}) => {
           setCategoriesList(data || []);
         })
         .catch((error) => {
@@ -237,7 +237,7 @@ export const CreateNewSend = (props) => {
 
   const getTemplates = useCallback(() => {
     getTemplateList()
-      .then(({ data }) => {
+      .then(({ data } = {}) => {
         setTemplateList(data || []);
       })
       .catch((error) => {

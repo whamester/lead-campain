@@ -76,22 +76,31 @@ const CampainTitle = ({ record }) => {
 };
 
 export const CampainEdit = (props) => {
-  const getSponsorList = useSponsorList();
+  const { getList } = useDataProvider();
   const notify = useNotify();
 
   const [sponsorList, setSponsorList] = useState([]);
 
+  const getSponsors = useCallback(() => {
+    getList(urls.sponsors, {
+      pagination: { perPage: 1000, page: 1 },
+      sort: {},
+      filter: {},
+    })
+      .then((response) => {
+        console.log(response);
+        setSponsorList(response?.data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+        notify("Oops! Something went wrong " + error.message, "error");
+      });
+  }, []);
+
   useEffect(() => {
-    if (!sponsorList.length) {
-      getSponsorList()
-        .then(({ data }) => {
-          setSponsorList(data || []);
-        })
-        .catch((error) => {
-          notify("Oops! Something went wrong " + error.message, "error");
-        });
-    }
-  }, [getSponsorList, sponsorList]);
+    getSponsors();
+  }, [getSponsors]);
+
   return (
     <Edit title={<CampainTitle />} {...props}>
       <SimpleForm>
@@ -115,22 +124,30 @@ export const CampainEdit = (props) => {
 };
 
 export const CampainCreate = (props) => {
-  const getSponsorList = useSponsorList();
+  const { getList } = useDataProvider();
   const notify = useNotify();
 
   const [sponsorList, setSponsorList] = useState([]);
 
+  const getSponsors = useCallback(() => {
+    getList(urls.sponsors, {
+      pagination: { perPage: 1000, page: 1 },
+      sort: {},
+      filter: {},
+    })
+      .then((response) => {
+        console.log(response);
+        setSponsorList(response?.data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+        notify("Oops! Something went wrong " + error.message, "error");
+      });
+  }, []);
+
   useEffect(() => {
-    if (!sponsorList.length) {
-      getSponsorList()
-        .then(({ data }) => {
-          setSponsorList(data || []);
-        })
-        .catch((error) => {
-          notify("Oops! Something went wrong " + error.message, "error");
-        });
-    }
-  }, [getSponsorList, sponsorList]);
+    getSponsors();
+  }, [getSponsors]);
 
   return (
     <Create title="Create a new campain" {...props}>

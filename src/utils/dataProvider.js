@@ -57,7 +57,7 @@ const dataProvider = {
     return axios(url.clientsByCategories(params.categories))
       .then((response) => {
         if (response?.data?.success) {
-          const { data = [] } = response?.data;
+          const { data = [] } = response?.data || {};
           return {
             data,
             total: Array.isArray(data) ? data.length : 0,
@@ -79,7 +79,7 @@ const dataProvider = {
     return axios(url.clientsBySend(params.sendId))
       .then((response) => {
         if (response?.data?.success) {
-          const { data = [] } = response?.data;
+          const { data = [] } = response?.data || {};
           return {
             data,
             total: Array.isArray(data) ? data.length : 0,
@@ -101,7 +101,7 @@ const dataProvider = {
     return axios(`${resource}/${params.id}`, {})
       .then((response) => {
         if (response?.data?.success) {
-          const { data = {} } = response?.data;
+          const { data = {} } = response?.data || {};
           if (`${resource}` === `${url.clients}`) {
             data.client = {
               ...data?.client,
@@ -111,13 +111,14 @@ const dataProvider = {
             };
           }
 
-          return { data: {} };
+          return { data };
         }
         return {
           data: {},
         };
       })
       .catch((e) => {
+        console.log(e);
         return {
           data: {},
         };
@@ -128,7 +129,7 @@ const dataProvider = {
   create: (resource, params) => {
     if (resource === url.sends) {
       resource = url.sendNewCampain;
-      const { campainId, categories, sendNow, templateId } = params.data;
+      const { campainId, categories, sendNow, templateId } = params?.data || {};
 
       params.data = {
         send: {
@@ -153,7 +154,7 @@ const dataProvider = {
       .post(`${resource}`, params.data)
       .then((response) => {
         if (response?.data?.success) {
-          const { data = {} } = response?.data;
+          const { data = {} } = response?.data || {};
           return { data };
         }
         return {
@@ -168,12 +169,14 @@ const dataProvider = {
   },
   update: (resource, params) => {
     if (resource === url.clients) {
-      const { categories, ...client } = params.data;
+      const { categories, client: deprecated, ...client } = params.data;
 
       params.data = {
         client: {
           ...client,
-          categories: categories,
+          categories: Array.isArray(categories)
+            ? categories.map((id) => `${id}`)
+            : [],
         },
         categories: Array.isArray(categories) ? categories.join(",") : "",
       };
@@ -183,7 +186,7 @@ const dataProvider = {
       .put(`${resource}`, { ...params.data })
       .then((response) => {
         if (response?.data?.success) {
-          const { data = {} } = response?.data;
+          const { data = {} } = response?.data || {};
           return { data };
         }
         return {
@@ -202,7 +205,7 @@ const dataProvider = {
       .delete(`${resource}/${params.id}`)
       .then((response) => {
         if (response?.data?.success) {
-          const { data = {} } = response?.data;
+          const { data = {} } = response?.data || {};
           return { data };
         }
         return {
