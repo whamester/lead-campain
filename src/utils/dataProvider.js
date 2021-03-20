@@ -171,7 +171,10 @@ const dataProvider = {
       const { categories, ...client } = params.data;
 
       params.data = {
-        client,
+        client: {
+          ...client,
+          categories: categories,
+        },
         categories: Array.isArray(categories) ? categories.join(",") : "",
       };
     }
