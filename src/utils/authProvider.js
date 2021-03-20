@@ -17,7 +17,7 @@ const authProvider = {
           return { data: rest };
         }
         return {
-          data: {},
+          data: response?.data,
         };
       })
       .catch((e) => {
@@ -37,7 +37,7 @@ const authProvider = {
           return { data: userData };
         }
         return {
-          data: {},
+          data: response?.data,
         };
       })
       .catch((e) => {

@@ -7,7 +7,7 @@ import {
   AppBar,
   Typography,
   Toolbar,
-  Link,
+  // Link,
 } from "@material-ui/core";
 import { useLogin, useNotify } from "react-admin";
 
@@ -19,9 +19,13 @@ const Login = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    login({ username, password }).catch(() =>
-      notify("Invalid username or password")
-    );
+    console.log("Hola");
+    login({ username, password })
+      .then((response) => {
+        console.log(response);
+        notify("Invalid username or password");
+      })
+      .catch(() => notify("Invalid username or password"));
   };
 
   return (
@@ -97,9 +101,9 @@ const Login = () => {
                 </form>
               </Grid>
 
-              <Grid item>
+              {/* <Grid item>
                 <Link href="/#/signup">Don't have an account? Sign up!</Link>
-              </Grid>
+              </Grid> */}
             </Paper>
           </Grid>
         </Grid>
