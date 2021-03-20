@@ -3,8 +3,8 @@ import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { getAuthRefresh, getAuthToken, initSession } from "./storage";
 import urls from "./apiUrls";
 const { refreshToken: refresUrl } = urls;
-
-axios.defaults.baseURL = "http://35.202.192.255/api";
+const { REACT_APP_API } = process.env;
+axios.defaults.baseURL = REACT_APP_API;
 
 // Function that will be called to refresh authorization
 const refreshAuthLogic = (failedRequest) =>
