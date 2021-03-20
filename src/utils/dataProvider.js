@@ -1,5 +1,6 @@
 import axios from "./axiosInterceptor";
 import url from "../utils/apiUrls";
+import { encryptData } from ".";
 
 const dataProvider = {
   getList: (resource, params) => {
@@ -150,6 +151,13 @@ const dataProvider = {
       };
     }
 
+    if (resource === url.users) {
+      params.data = {
+        ...params.data,
+        password: encryptData(params.data.password),
+      };
+    }
+
     return axios
       .post(`${resource}`, params.data)
       .then((response) => {
@@ -179,6 +187,13 @@ const dataProvider = {
             : [],
         },
         categories: Array.isArray(categories) ? categories.join(",") : "",
+      };
+    }
+
+    if (resource === url.users) {
+      params.data = {
+        ...params.data,
+        password: encryptData(params.data.password),
       };
     }
 

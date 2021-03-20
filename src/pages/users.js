@@ -46,6 +46,7 @@ export const UserEdit = (props) => (
       <TextField source="id" label="ID" />
       <TextInput source="name" validate={required()} label="Name" />
       <TextInput source="email" validate={required()} label="Email" />
+      <PasswordInput source="password" />
       <BooleanInput source="isSuperUser" label="Super user" />
       <BooleanInput source="isActive" label="Active" />
       <DateField source="createdDate" label="Created at" />
