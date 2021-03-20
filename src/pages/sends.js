@@ -46,7 +46,9 @@ const ResendMasiveCampains = (props) => {
   const onSendMany = () => {
     resendMany(sendNewCampain, { ids: selectedIds })
       .then((response) => {
-        notify(response.message, "success");
+        if (response?.data) {
+          notify(response?.data[0]?.data.message);
+        }
       })
       .catch((error) => {
         notify("Oops! Something went wrong " + error.message, "error");
@@ -104,7 +106,9 @@ const SendShowActions = (props) => {
   const onSendMany = () => {
     resendMany(sendNewCampain, { ids: [data.id] })
       .then((response) => {
-        notify(response.message, "success");
+        if (response?.data) {
+          notify(response?.data[0]?.data.message);
+        }
       })
       .catch((error) => {
         notify("Oops! Something went wrong " + error.message, "error");
@@ -114,7 +118,7 @@ const SendShowActions = (props) => {
   return (
     <TopToolbar>
       <Button color="primary" onClick={onSendMany}>
-        Resendc
+        Resend
       </Button>
     </TopToolbar>
   );

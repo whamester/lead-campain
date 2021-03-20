@@ -21,7 +21,10 @@ const authProvider = {
         };
       })
       .catch((e) => {
-        throw new Error(e);
+        console.log(e);
+        return {
+          data: e,
+        };
       });
   },
   signup: ({ name, email, password }) => {

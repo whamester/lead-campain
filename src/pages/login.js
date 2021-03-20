@@ -29,18 +29,15 @@ const theme = createMuiTheme({
 const Login = () => {
   const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const login = useLogin();
   const notify = useNotify();
 
   const submit = (e) => {
     e.preventDefault();
-    console.log("Hola");
-    login({ username, password })
-      .then((response) => {
-        console.log(response);
-        notify("Invalid username or password");
-      })
-      .catch(() => notify("Invalid username or password"));
+    login({ username, password }).catch(() =>
+      alert("Invalid username or password")
+    );
   };
 
   return (
