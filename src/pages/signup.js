@@ -37,7 +37,7 @@ const Signup = () => {
         <Toolbar>
           <Grid container justify="center" wrap="wrap">
             <Grid item>
-              <Typography variant="h6">Lead Campains</Typography>
+              <Typography variant="h6">WONNYO SELMIRA HAMESTER TOZAWA -  PARCIAL - 25 29 60 2014</Typography>
             </Grid>
           </Grid>
         </Toolbar>

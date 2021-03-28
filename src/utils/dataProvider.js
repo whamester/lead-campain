@@ -5,10 +5,8 @@ import { encryptData } from ".";
 const dataProvider = {
   getList: (resource, params) => {
     const { country } = params?.filter;
-
     return axios(`${resource}`, { params: { country } })
       .then((response) => {
-        console.log(response?.data?.response);
         return {
           data: [
             ...response?.data?.response.map((data, i) => ({
@@ -32,6 +30,28 @@ const dataProvider = {
         };
       });
   },
+
+  getCountries: () => {
+    return axios(`countries`, {})
+      .then((response) => {
+
+        return {
+          data: [
+            ...response?.data?.response.map((id) => ({
+              name: `${id}`.replace("-", " "),
+              id,
+            })),
+          ],
+        };
+      })
+
+      .catch((e) => {
+        return {
+          data: [],
+          total: 0,
+        };
+      });
+  },
   getCatalog: (resource) => {
     return axios(`${resource}`, {})
       .then((response) => {
@@ -42,31 +62,6 @@ const dataProvider = {
         return {
           data: [],
           total: 0,
-        };
-      })
-      .catch((e) => {
-        return {
-          data: [],
-          total: 0,
-        };
-      });
-  },
-  getCountries: () => {
-    return axios(`countries`, {})
-      .then((response) => {
-        console.log([
-          ...response?.data?.response.map((data, i) => ({
-            name: data,
-            id: data,
-          })),
-        ]);
-        return {
-          data: [
-            ...response?.data?.response.map((data, i) => ({
-              name: data,
-              id: data,
-            })),
-          ],
         };
       })
       .catch((e) => {

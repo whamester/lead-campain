@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import {
   List,
   Datagrid,
@@ -15,11 +15,12 @@ import {
   BooleanInput,
   PasswordInput,
   Filter,
+  Title,
 } from "react-admin";
-import urls from "../utils/apiUrls";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import { Card } from "@material-ui/core";
 export const UserIcon = PersonOutlineIcon;
-const { users } = urls;
+
 
 const CountryFilter = (props) => {
   const { getCountries } = useDataProvider();
@@ -43,7 +44,11 @@ const CountryFilter = (props) => {
 };
 
 export const UserList = (props) => (
-  <List {...props} filters={<CountryFilter />} bulkActionButtons={null}>
+  <Fragment>
+     <Card>
+        <Title title="WONNYO SELMIRA HAMESTER TOZAWA  - 2529602014 - PARCIAL / " />
+    </Card>
+    <List {...props}   filters={<CountryFilter />} bulkActionButtons={null}>
     <Datagrid>
       <TextField source="id" />
       <DateField source="day" />
@@ -58,6 +63,8 @@ export const UserList = (props) => (
       <TextField source="total_deaths" />
     </Datagrid>
   </List>
+  </Fragment>
+ 
 );
 
 const UserTitle = ({ record }) => {
