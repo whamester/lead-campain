@@ -5,7 +5,6 @@ import {
   Edit,
   Create,
   SelectInput,
-  DateInput,
   SimpleForm,
   DateField,
   TextField,
@@ -44,13 +43,19 @@ const CountryFilter = (props) => {
 };
 
 export const UserList = (props) => (
-  <List {...props} filters={<CountryFilter />}>
+  <List {...props} filters={<CountryFilter />} bulkActionButtons={null}>
     <Datagrid>
-      <TextField source="continent" label="continent" />
-      <TextField source="country" label="country" />
-      <TextField source="population" label="population" />
-      <DateField source="day" label="day" />
-      {/* <EditButton basePath={`/${users}`} /> */}
+      <TextField source="id" />
+      <DateField source="day" />
+      <TextField source="country" />
+      <TextField source="continent" />
+      <TextField source="population" />
+      <TextField source="new_cases" />
+      <TextField source="active_cases" />
+      <TextField source="critical_cases" />
+      <TextField source="recovered_cases" />
+      <TextField source="new_deaths" />
+      <TextField source="total_deaths" />
     </Datagrid>
   </List>
 );

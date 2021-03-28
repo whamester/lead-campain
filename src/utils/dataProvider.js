@@ -11,7 +11,16 @@ const dataProvider = {
         console.log(response?.data?.response);
         return {
           data: [
-            ...response?.data?.response.map((data, i) => ({ ...data, id: i })),
+            ...response?.data?.response.map((data, i) => ({
+              ...data,
+              id: i,
+              new_cases: data.cases?.new,
+              active_cases: data.cases?.active,
+              critical_cases: data.cases?.critical,
+              recovered_cases: data.cases?.recovered,
+              new_deaths: data.deaths?.new,
+              total_deaths: data.deaths?.total,
+            })),
           ],
           total: response?.data?.response.length,
         };
