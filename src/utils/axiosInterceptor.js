@@ -30,16 +30,18 @@ const refreshAuthLogic = (failedRequest) =>
     });
 
 // Instantiate the interceptor (you can chain it as it returns the axios instance)
-createAuthRefreshInterceptor(axios, refreshAuthLogic);
+// createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
     // config.mode = "no-cors";
     config.headers = {
-      Authorization: `Bearer ${getAuthToken()}`,
+      // Authorization: `Bearer ${getAuthToken()}`,
       Accept: "application/json",
       "Content-Type": "application/json",
+      "x-rapidapi-key": "ad7bf8e0femshccc60d411c6856bp14fbddjsn6d2ce9feae53",
+      "x-rapidapi-host": "covid-193.p.rapidapi.com",
     };
     config.crossdomain = true;
 

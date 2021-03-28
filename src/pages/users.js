@@ -1,37 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   List,
   Datagrid,
   Edit,
   Create,
+  SelectInput,
+  DateInput,
   SimpleForm,
   DateField,
   TextField,
-  EditButton,
+  useNotify,
+  useDataProvider,
   TextInput,
   required,
-  BooleanField,
   BooleanInput,
   PasswordInput,
+  Filter,
 } from "react-admin";
 import urls from "../utils/apiUrls";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 export const UserIcon = PersonOutlineIcon;
 const { users } = urls;
 
+const CountryFilter = (props) => {
+  const { getCountries } = useDataProvider();
+  const notify = useNotify();
+  const [countryList, setCountryList] = useState([]);
+  useEffect(() => {
+    getCountries()
+      .then((response) => {
+        setCountryList(response?.data || []);
+      })
+      .catch((error) => {
+        notify("Oops! Something went wrong " + error.message, "error");
+      });
+  }, [notify]);
+
+  return (
+    <Filter {...props}>
+      <SelectInput source="country" label="Country" choices={countryList} />
+    </Filter>
+  );
+};
+
 export const UserList = (props) => (
-  <List {...props}>
+  <List {...props} filters={<CountryFilter />}>
     <Datagrid>
-      <TextField source="id" label="ID" />
-      <TextField source="name" label="Name" />
-      <TextField source="email" label="Email" />
-      <BooleanField source="isSuperUser" label="Super user" />
-      <BooleanField source="isActive" label="Active" />
-      <DateField source="createdDate" label="Created at" />
-      <TextField source="createUser" label="Created by" />
-      <DateField source="updatedDate" label="Last updated at" />
-      <TextField source="updateUser" label="Last updated by" />
-      <EditButton basePath={`/${users}`} />
+      <TextField source="continent" label="continent" />
+      <TextField source="country" label="country" />
+      <TextField source="population" label="population" />
+      <DateField source="day" label="day" />
+      {/* <EditButton basePath={`/${users}`} /> */}
     </Datagrid>
   </List>
 );

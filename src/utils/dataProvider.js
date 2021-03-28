@@ -4,28 +4,16 @@ import { encryptData } from ".";
 
 const dataProvider = {
   getList: (resource, params) => {
-    const { page, perPage: pageSize } = params.pagination;
-    const { field: sortOn, order: sortDirection } = params.sort;
-    const { categories } = params?.filter;
+    const { country } = params?.filter;
 
-    return axios(`${resource}/Page/${page}`, {
-      params: {
-        pageSize,
-        sortOn,
-        sortDirection,
-        categories: Array.isArray(categories) ? categories.join(",") : "",
-        categoriesId: Array.isArray(categories) ? categories.join(",") : "",
-      },
-    })
+    return axios(`${resource}`, { params: { country } })
       .then((response) => {
-        if (response?.data?.success) {
-          const { items = [], totalCount = 0 } = response?.data?.data;
-
-          return { data: items, total: totalCount };
-        }
+        console.log(response?.data?.response);
         return {
-          data: [],
-          total: 0,
+          data: [
+            ...response?.data?.response.map((data, i) => ({ ...data, id: i })),
+          ],
+          total: response?.data?.response.length,
         };
       })
       .catch((e) => {
@@ -45,6 +33,31 @@ const dataProvider = {
         return {
           data: [],
           total: 0,
+        };
+      })
+      .catch((e) => {
+        return {
+          data: [],
+          total: 0,
+        };
+      });
+  },
+  getCountries: () => {
+    return axios(`countries`, {})
+      .then((response) => {
+        console.log([
+          ...response?.data?.response.map((data, i) => ({
+            name: data,
+            id: data,
+          })),
+        ]);
+        return {
+          data: [
+            ...response?.data?.response.map((data, i) => ({
+              name: data,
+              id: data,
+            })),
+          ],
         };
       })
       .catch((e) => {

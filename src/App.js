@@ -12,53 +12,18 @@ import { createMuiTheme } from "@material-ui/core/styles";
 
 import { UserList, UserEdit, UserCreate, UserIcon } from "./pages/users";
 
-import {
-  CategoryList,
-  CategoryEdit,
-  CategoryCreate,
-  CategoryIcon,
-} from "./pages/categories";
-
-import {
-  TemplateList,
-  TemplateEdit,
-  TemplateCreate,
-  TemplateIcon,
-} from "./pages/templates";
-
-import {
-  CampainList,
-  CampainEdit,
-  CampainCreate,
-  CampainIcon,
-} from "./pages/campains";
-
-import {
-  ClientList,
-  ClientEdit,
-  ClientCreate,
-  ClientIcon,
-} from "./pages/clients";
-
-import {
-  SponsorList,
-  SponsorEdit,
-  SponsorCreate,
-  SponsorIcon,
-} from "./pages/sponsors";
-
 import "./App.css";
 import { CreateNewSend, SendIcon, SendList, SendShow } from "./pages/sends";
 
 const theme = createMuiTheme({
   palette: {
-    // type: "dark", // Switching the dark mode on is a single property value change.
-    primary: {
-      main: "#FA671C",
-    },
-    secondary: {
-      main: "#FA671C",
-    },
+    type: "dark", // Switching the dark mode on is a single property value change.
+    // primary: {
+    //   main: "#FA671C",
+    // },
+    // secondary: {
+    //   main: "#FA671C",
+    // },
   },
 });
 
@@ -75,23 +40,23 @@ const {
 const App = () => {
   return (
     <Admin
-      customRoutes={routes}
+      // customRoutes={routes}
       dataProvider={dataProvider}
       authProvider={authProvider}
-      loginPage={Login}
-      logoutButton={LogoutButton}
+      // loginPage={Login}
+      // logoutButton={LogoutButton}
       theme={theme}
-      dashboard={Home}
+      // dashboard={Home}
       customReducers={{ sends: sendsReducer }}
     >
       <Resource
-        name={users}
+        name="statistics"
         list={UserList}
         icon={UserIcon}
-        edit={UserEdit}
-        create={UserCreate}
+        // edit={UserEdit}
+        // create={UserCreate}
       />
-      <Resource
+      {/* <Resource
         name={categories}
         list={CategoryList}
         edit={CategoryEdit}
@@ -135,7 +100,7 @@ const App = () => {
         show={SendShow}
         icon={SendIcon}
         create={CreateNewSend}
-      />
+      /> */}
     </Admin>
   );
 };
